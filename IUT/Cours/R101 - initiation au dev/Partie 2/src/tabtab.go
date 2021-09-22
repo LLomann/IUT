@@ -9,7 +9,7 @@ func main() {
 		[]int{6, 7, 8, 9, 10},
 	}
 
-	fmt.Println("tab =", mat)
-	fmt.Println("tab[0] =", mat[0])
-	fmt.Println("tab[0][1] =", mat[0][1])
+	fmt.Println("tab =", tab)
+	fmt.Println("tab[0] =", tab[0])
+	fmt.Println("tab[0][1] =", tab[0][1])
 }
