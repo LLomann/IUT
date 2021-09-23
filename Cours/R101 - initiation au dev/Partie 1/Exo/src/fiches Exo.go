@@ -15,7 +15,17 @@ func Temps(){ 				// ex 2.5 suite
 	fmt.Println("le temps est de", heu, "heure(s),", min, "minute(s) et", sec, "seconde(s)")
 }
 
+func multiple_de(n,x,y int){	// ex 4.1
+	for i := x; i <= y; i = i + n {
+		fmt.Println("les multiples de", n,"entre", x,"et", y,"son:", i)
+	}
+}
 
+func tab(tab[]int){				// exercice 4.1 suiteBis
+	for i:=0; i<len(tab); i++{
+		fmt.Println(tab[i])
+	}
+}
 
 func main(){
 	fmt.Println("Bonjour") // ex 1
@@ -45,9 +55,25 @@ func main(){
 
 	fmt.Println("le temps est de", heu, "heure(s),", min, "minute(s) et", sec, "seconde(s)")
 
-}
-
+	multiple_de(9,0,100) // exercice 4.1
 	
+	for i:=0; i<10; i++{ // exercice 4.1 suite
+		fmt.Println("bonjour")
+	}
+
+	var tableau1 []int = []int{0,1,2,3,4,5,6,7,8,9}		// exercice 4.1 suiteBis
+	var tableau2 []int = []int{0,1,2,3,4,5,6,7,8,9,10,11}
+	var tableau3 []int
+	tab(tableau1)
+	tab(tableau2)
+	tab(tableau3)
+
+	var compte int 
+	var tour int = 2
+	for i:=0; i < 10; i = i + tour {
+		compte = compte + tour
+	}
+	fmt.Println("le nb de tour est de:", compte)
 
 
-
+}
