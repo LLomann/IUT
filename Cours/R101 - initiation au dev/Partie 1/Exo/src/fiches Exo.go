@@ -27,6 +27,7 @@ func tab(tab[]int){				// exercice 4.1 suiteBis
 	}
 }
 
+
 func main(){
 	fmt.Println("Bonjour") // ex 1
 
@@ -68,12 +69,20 @@ func main(){
 	tab(tableau2)
 	tab(tableau3)
 
-	var compte int 
+	var compte int  // exercice 4.2
 	var tour int = 2
 	for i:=0; i < 10; i = i + tour {
 		compte = compte + tour
 	}
 	fmt.Println("le nb de tour est de:", compte)
 
+
+	var m float64 = 0	// exercice 4.3
+  	var tableau []float64 = []float64 {5.4, 9.4, 7.5, 16.5}
+  	for i := 0; i < len(tableau); i = i + 1 {
+    	m = m + tableau[i]
+    }
+  	m = m / float64(len(tableau))
+  	fmt.Println(m)
 
 }
