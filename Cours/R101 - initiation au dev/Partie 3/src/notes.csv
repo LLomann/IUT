@@ -63,7 +63,7 @@ René,12,1,13
 Luc,11,1,12
 Maria,12,0,12
 Léa,16,1,17
-Christian,8,0,7
+Christian,8,0,8
 Vincent,19,1,20
 Véronique,6,0,6
 Jacques,7,0,7
@@ -122,7 +122,7 @@ Marc,6,0,6
 Anne-Claire,10,1,11
 Jacques,12,0,12
 Serge,8,0,8
-Sylvie,7,1,7
+Sylvie,7,1,8
 Christian,16,0,16
 Éléonore,20,1,21
 Lucie,6,1,7
@@ -184,7 +184,7 @@ Claire,18,1,19
 Christine,6,1,7
 Claire,8,0,8
 Charlotte,10,0,10
-Jacques,19,1,19
+Jacques,19,1,20
 Jacques,14,1,15
 Vincent,14,0,14
 Maria,10,0,10
@@ -253,7 +253,7 @@ Charlotte,10,1,11
 Maria,18,0,18
 Marc,10,1,11
 Véronique,6,0,6
-Sylvie,13,0,12
+Sylvie,13,0,13
 Jacques,8,0,8
 Léa,10,1,11
 Rémi,16,1,17
@@ -491,7 +491,7 @@ Jean-François,18,0,18
 Lucie,18,0,18
 Anne-Claire,19,1,20
 Jean,14,1,15
-Sonia,11,0,10
+Sonia,11,0,11
 Jacques,20,0,20
 Christian,7,0,7
 Marc,15,1,16
@@ -684,7 +684,7 @@ Louise,17,0,17
 Jean,19,1,20
 Charlotte,7,1,8
 Charlotte,6,1,7
-Véronique,8,1,8
+Véronique,8,1,9
 Charlotte,11,0,11
 Rémi,12,1,13
 René,6,1,7
@@ -725,7 +725,7 @@ Vincent,18,1,19
 Jean-François,6,1,7
 Anne-Claire,20,1,21
 Louis,10,1,11
-Jean,13,0,12
+Jean,13,0,13
 Sylvie,16,0,16
 Jacques,10,1,11
 Christine,14,0,14
@@ -922,7 +922,7 @@ Marc,7,1,8
 Sonia,19,1,20
 Jean,15,1,16
 Jean,20,0,20
-Sonia,8,1,8
+Sonia,8,1,9
 Véronique,18,1,19
 Charlotte,12,0,12
 Serge,15,1,16
