@@ -23,8 +23,6 @@ def compte(l):
 	return compteur
 		
 
-
-
 # Exercice 4.1
 
 def et(x,y):
@@ -128,8 +126,30 @@ def moyenne(E):
 
 # Exercice 5.2
 #a)
+def est_ensemble(l) :
+    for i in range(len(l)) :
+        for j in range(i+1, len(l)) :
+            if l[i] == l[j] :   
+                return False
+            j = j+1
+        i = i+1
+    return True
 
+liste = [1,2,3,2,4,8,9,7]
+print(est_ensemble(liste))
+		
+#b)
+def suppr_doublon(l) :
+    tab = []
+    for i in range(len(l)) :
+        double = False
+        for j in range(i+1, len(l)) :
+            if l[i] == l[j] :
+                double = True
+                break
+        if not double : 
+            tab.append(l[i])         
+    return tab        
+                       
+print(suppr_doublon(liste))
 
-		
-		
-		
