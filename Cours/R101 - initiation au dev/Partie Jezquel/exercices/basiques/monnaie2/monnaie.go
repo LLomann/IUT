@@ -27,5 +27,17 @@ rendreMonnaie(12, 20, 15, 0) = [1, 1], [50, 20, 10] (ce n'est pas la seule possi
 */
 func rendreMonnaie(eurosAchat, centimesAchat, eurosPayes, centimesPayes int) (eurosRendus, centimesRendus []int, err error) {
 
+	if eurosAchat*100 + centimesAchat > eurosPayes*100 + centimesPayes {
+		return 0, 0, errPasAssezPaye
+	}else{
+		if centimesPayes < centimesAchat{
+			centimesRendus = centimesAchat + centimesPayes
+			eurosRendus = (eurosPayes - eurosAchat) -1
+		}else{
+			centimesRendus = centimesPayes - centimesAchat
+			eurosRendus = (eurosPayes - eurosAchat) 
+		}	
+	}
 	return eurosRendus, centimesRendus, err
 }
+

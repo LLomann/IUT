@@ -26,5 +26,17 @@ rendreMonnaie(12, 20, 15, 0) = 2, 80
 */
 func rendreMonnaie(eurosAchat, centimesAchat, eurosPayes, centimesPayes int) (eurosRendus, centimesRendus int, err error) {
 
+	if eurosAchat*100 + centimesAchat > eurosPayes*100 + centimesPayes {
+		return 0, 0, errPasAssezPaye
+	}else{
+		if centimesPayes < centimesAchat{
+			eurosPayes = eurosPayes -1
+			centimesRendus = centimesAchat + centimesPayes
+			eurosRendus = eurosPayes - eurosAchat
+		}else{
+			centimesRendus = centimesPayes - centimesAchat
+			eurosRendus = eurosPayes - eurosAchat
+		}	
+	}
 	return eurosRendus, centimesRendus, err
 }

@@ -16,5 +16,24 @@ estEnsemble([]int{1, 2, 3}) = true
 estEnsemble([]int{1, 2, 2}) = false
 */
 func estEnsemble(E []int) (b bool) {
+
+
+	b = true
+	if E == nil{
+		b= false
+	}else{
+		if len(E) == 0{
+			b = true
+	}else{
+		for i:= 0; i<len(E); i++ {
+			for j:= i+1; j<len(E); j++ {
+				if E[i] == E [j] {
+					b = false
+				}
+			}
+		}
+	}	
+	}
 	return b
+ 
 }

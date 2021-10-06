@@ -15,5 +15,23 @@ faut retourner un tableau à zéro éléments.
 premiers(24) = [2 2 2 3] (l'ordre n'a pas d'importance)
 */
 func facteursPremiers(n uint) (facteurs []uint) {
-	return facteurs
+
+	var tablo []uint
+
+	if n <= 1 {
+		return []uint{}
+	}else{
+		var i uint = uint(2)
+		for n != 1 {
+			if n%i == 0{
+				tablo = append(tablo, i)
+			n = n/i
+			}else{
+				i++
+			}
+			
+		}
+
+	}
+	return tablo
 }
