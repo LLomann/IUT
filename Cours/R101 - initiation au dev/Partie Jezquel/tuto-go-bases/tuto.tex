@@ -1,0 +1,505 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fullpage}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[hyperfootnotes=false]{hyperref}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%\usepackage{setspace}
+%\onehalfspacing
+
+%boxes
+\newcounter{saveFootnote}
+\usepackage{fancybox}
+\newcommand{\important}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\doublebox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\remarque}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\fbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\exercice}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\shadowbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+
+%code
+\usepackage{listings}
+\usepackage{color}
+\usepackage{newfloat}
+\usepackage{caption}
+\DeclareFloatingEnvironment[fileext=frm,placement={htbp},name=Programme]{figprog}
+\captionsetup[figprog]{labelfont=bf}
+%% Golang definition for listings
+%% http://github.io/julienc91/lstlistings-golang
+\lstdefinelanguage{Golang}{
+  morekeywords=[1]{package,import,func,type,struct,return,defer,panic,recover,select,var,const,iota,},
+   morekeywords=[2]{string,uint,uint8,uint16,uint32,uint64,int,int8,int16,int32,int64,bool,float32,float64,complex64,complex128,byte,rune,uintptr, error,interface},
+   morekeywords=[3]{map,slice,make,new,nil,len,cap,copy,close,true,false,delete,append,real,imag,complex,chan,},
+   morekeywords=[4]{for,break,continue,range,go,goto,switch,case,fallthrough,if,
+     else,default,},
+   morekeywords=[5]{Println,Printf,Error,Print,},
+   sensitive=true,
+   morecomment=[l]{//},
+   morecomment=[s]{/*}{*/},
+   morestring=[b]',
+   morestring=[b]",
+   morestring=[s]{`}{`}
+   }
+\lstset{
+    extendedchars=\true,
+    inputencoding=utf8,
+    literate=%
+            {é}{{\'{e}}}1
+            {è}{{\`{e}}}1
+            {ê}{{\^{e}}}1
+            {ë}{{\¨{e}}}1
+            {û}{{\^{u}}}1
+            {ù}{{\`{u}}}1
+            {â}{{\^{a}}}1
+            {à}{{\`{a}}}1
+            {î}{{\^{i}}}1
+            {ô}{{\^{o}}}1
+            {ç}{{\c{c}}}1
+            {Ç}{{\c{C}}}1
+            {É}{{\'{E}}}1
+            {Ê}{{\^{E}}}1
+            {À}{{\`{A}}}1
+            {Â}{{\^{A}}}1
+            {Î}{{\^{I}}}1,
+    frame=none,
+    xleftmargin=1cm,
+    basicstyle=\footnotesize,
+    keywordstyle=\bf\color{blue},
+    numbers=none,
+    numbersep=5pt,
+    showstringspaces=false,
+    stringstyle=\color{red},
+    tabsize=4,
+    language=Golang % this is it !
+}
+\newcommand{\sourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{10cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+
+% macros générales
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\madoc}{\textsc{Madoc}}
+\newcommand{\term}[1]{\textsf{#1}}
+\newcommand{\inlinecode}[1]{\textsf{#1}}
+\newcommand{\goout}[1]{\textsf{#1}} % retours de go, erreurs, etc
+
+\title{Les bases du langage Go\\ Partie 1~: variables, tableaux, boucles, conditionnelles, fonctions}
+\author{Initiation au développement}
+\date{BUT informatique, première année}
+
+\begin{document}
+
+\maketitle{}
+
+Ce TP a pour but de vous présenter les bases du langage Go.
+C'est ce langage qui sera utilisé pour réaliser tous les exercices de ce cours d'initiation au développement. Il n'y a pas de prérequis particuliers en dehors des notions de conditionnelle, de boucle et de variable, qui ont été étudiées au lycée.
+
+\important{Dans tout ce TP un texte avec cet encadrement est un texte contenant une information importante, il faut donc le lire avec attention et veiller à en tenir compte.}
+
+\remarque{Un texte avec cet encadrement est une remarque.}
+
+\exercice{Un texte avec cet encadrement est un travail que vous avez à faire.}
+
+\important{Même si la plupart des exercices de ce TP peuvent vous sembler très faciles, faites les tous sérieusement~: cela vous permettra de retenir la syntaxe du langage Go et d'être ainsi plus à l'aise lors des prochains TPs.}
+
+\remarque{Si vous souhaitez avoir un autre point de vue sur l'apprentissage du langage Go, vous pouvez consulter le tutoriel officiel \emph{A Tour of Go}\footnotemark{} ou le site \emph{Go by Example}\footnotemark{} en faisant toute fois attention au fait que ces sites sont plutôt faits pour les personnes ayant déjà une bonne expérience de la programmation.}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://tour.golang.org/}}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://gobyexample.com/}}
+
+\newpage{}
+\section{Un premier programme}
+
+Le programme~\ref{prog:premier} est un code Go très simple.
+Avant d'expliquer les différents éléments qui le constituent nous allons voir comment l'exécuter, c'est-à-dire comment le faire fonctionner sur un ordinateur.
+
+\sourcecode{hello.go}{Hello World! en Go}{prog:premier}
+
+\exercice{Récupérez le fichier \file{hello.go} sur \madoc{} et enregistrez-le dans un répertoire de votre choix. Ouvrez un terminal et placez-vous dans ce répertoire. Utilisez enfin la commande \term{go run hello.go}. Si tout s'est bien passé vous avez exécuté le programme et le texte \emph{Hello World!} s'est affiché dans votre terminal.}
+
+Nous allons maintenant analyser ce programme simple.
+\begin{itemize}
+\item La première ligne indique \inlinecode{package main}.
+Nous verrons plus tard dans le cours à quoi exactement cela correspond.
+Pour l'instant il vous suffit de retenir que tous vos fichiers de code Go doivent commencer par cette ligne.
+\item La deuxième ligne indique \inlinecode{import "fmt"}.
+Cette ligne permet de récupérer du code déjà écrit par d'autres développeurs pour pouvoir le réutiliser par la suite.
+Le code récupéré est ici celui de la \emph{bibliothèque} \inlinecode{fmt}, qui permet notamment d'afficher des choses dans le terminal.
+\item La troisième ligne indique \inlinecode{func main() \{} et elle est associée à la dernière ligne \inlinecode{\}} qui ferme l'accolade ouverte auparavant.
+Nous verrons un peu plus tard en détail à quoi correspond le mot clé \inlinecode{func} (déclaration d'une fonction) mais pour le moment il vous suffit de retenir que, car cette fonction s'appelle \inlinecode{main}, le code qui est écrit entre les accolades est celui qui sera exécuté quand on exécutera le programme.
+\item La quatrième ligne indique \inlinecode{fmt.Println("Hello World!")}, c'est le code principal du programme.
+On utilise une fonction \inlinecode{Println}.
+Pour savoir que c'est la fonction \inlinecode{Println} qui provient de la bibliothèque \inlinecode{fmt} (et pas une autre version de cette fonction) on préfixe le nom de cette fonction de \inlinecode{fmt.}
+Cette fonction a ici un argument \inlinecode{"Hello World!"} et affiche celui-ci.
+\end{itemize}
+
+\exercice{Écrivez puis testez un programme qui affiche \emph{Bonjour !} dans le terminal où on l'exécute.}
+
+\remarque{On ne va bien sûr pas apprendre par cœur le contenu de toutes les bibliothèques disponibles en Go (il y en a beaucoup). Lorsqu'on a besoin d'une fonctionnalité particulière on cherche dans la \emph{documentation du langage}\footnotemark{} si elle existe. On y trouve notamment la description de toutes les bibliothèques fournies de base avec le langage~: la \emph{bibliothèque standard}\footnotemark{} (qui contient par exemple \inlinecode{fmt}). Il existe aussi de nombreuses autres bibliothèques, développées par des tiers.}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{https://golang.org/doc/}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{https://pkg.go.dev/std}
+
+\important{Dans toute la suite on créera nos programmes sur ce modèle (\inlinecode{package main}, \inlinecode{func main() \{\}}) et on les exécutera en utilisant la commande \term{go run}.}
+
+\section{Variables}
+
+Quand on écrit un programme informatique on a, en général, besoin d'enregistrer des valeurs pour les réutiliser plus tard.
+Pour cela on utilise des \emph{variables}.
+
+\subsection{Déclaration de variables}
+
+Lorsqu'on crée une nouvelle variable on dit qu'on la \emph{déclare}.
+Le programme~\ref{prog:vars} montre quelques exemples de déclarations de variables en Go.
+
+\sourcecode{vars.go}{Quelques déclarations de variables}{prog:vars}
+
+On peut remarquer que la déclaration d'une variable se fait avec le mot clé \inlinecode{var}, suivi du nom de la variable, suivi d'un \emph{type}.
+Ce type indique la nature des choses qu'on stockera dans la variable.
+Toute variable a obligatoirement un type qui est fixé une fois pour toute~: on ne peut pas le changer après la déclaration.
+
+Dans ce programme on observe trois types différents~: \inlinecode{int} qui représente un entier, \inlinecode{bool} qui représente un booléen (vrai ou faux) et \inlinecode{string} qui représente une chaîne de caractères (une séquence de symboles, comme par exemple \inlinecode{"Hello World!"}).
+
+On verra d'autre types par la suite.
+
+\subsection{Valeurs par défaut}
+
+\exercice{Récupérez le fichier \file{vars.go} sur \madoc{} puis exécutez-le.}
+
+On remarque que, bien qu'on n'ait pas donné de valeurs aux variables, celles-ci en ont tout de même~: 0 pour l'entier, \inlinecode{false} pour le booléen, et \inlinecode{""} (c'est-à-dire la chaîne vide) pour la chaîne de caractères.
+
+En Go, contrairement à beaucoup d'autres langages, toute variable a une valeur par défaut, qui dépend de son type.
+Si vous créez un entier, par exemple, vous avez la garantie que, tant que vous ne le modifiez pas, il vaut 0.
+
+\subsection{Variables inutilisées}
+
+\exercice{Modifiez le fichier \file{vars.go} en enlevant une (et une seule) des utilisations de \inlinecode{Println} puis exécutez-le à nouveau. Vous devez observer une erreur.}
+
+L'erreur observée (dans le cas où on supprime l'affichage de \inlinecode{b}) doit normalement ressembler à ceci~: \goout{./vars.go:8:6: b declared but not used}.
+Elle indique que, dans le fichier \file{vars.go}, à la 6ème lettre de la ligne 8, une variable b est déclarée qui n'est ensuite jamais utilisée dans le reste du programme.
+
+\important{En Go, si on déclare une variable on doit obligatoirement l'utiliser ensuite.}
+
+\remarque{En enlevant toutes les utilisations de \inlinecode{Println} à \file{vars.go} on observe une autre erreur qui nous indique qu'on importe \inlinecode{fmt} mais qu'on ne l'utilise pas et qu'il faut donc retirer toute la ligne \inlinecode{import "fmt"}.}
+
+\subsection{Affectation de variables}
+
+Tout l'intérêt des variables est de pouvoir changer leur valeur, on dit qu'on les \emph{affecte}.
+On peut le faire en utilisant le signe \inlinecode{=} comme le montre le programme~\ref{prog:vars2}.
+
+\sourcecode{vars2.go}{Quelques affectations de variables}{prog:vars2}
+
+On notera qu'on peut affecter une variable dès sa déclaration \inlinecode{var n int = 1} ou plus tard \inlinecode{n = 2} et dans ce cas on écrit seulement le nom de la variable à gauche du signe \inlinecode{=} (on ne souhaite pas la redéclarer).
+
+\exercice{Récupérez le fichier \file{vars2.go} sur \madoc{} puis exécutez-le.}
+
+\exercice{Modifiez le programme \file{hello.go} pour stocker le texte dans une variable avant de l'afficher. Testez votre programme.}
+
+\subsection{Calculs}
+
+Enfin, on peut utiliser nos variables pour faire des calculs.
+On dispose des opérations standards associées au type des variables manipulées, en particulier~:
+\begin{itemize}
+  \item l'addition (\inlinecode{+}), la soustraction (\inlinecode{-}), la multiplication (\inlinecode{*}) et la division (\inlinecode{/}) pour les entiers,
+  \item le OU (\inlinecode{||}), le ET (\inlinecode{\&\&}) et le NON (\inlinecode{!}) pour les booléens,
+  \item la concaténation (\inlinecode{+}) pour les chaînes de caractères,
+  \item mais aussi les comparaisons (supérieur strict \inlinecode{>}, supérieur ou égal \inlinecode{>=}, inférieur strict \inlinecode{<}, inférieur ou égal \inlinecode{<=}, égal \inlinecode{==}, différent \inlinecode{!=}) qui traitent des entiers mais donnent en résultat des booléens.
+\end{itemize}
+
+\remarque{Il existe d'autres opérations et des raccourcis syntaxiques pour les cas d'utilisations les plus communs de celles-ci, que vous découvrirez au fur et à mesure de votre apprentissage du langage.}
+
+Le programme~\ref{prog:calcul} donne quelques exemples d'utilisation de ces opérations.
+On peut noter que ce n'est pas un problème d'écrire \inlinecode{n = n+10}~: le calcul à droite du signe \inlinecode{=} est réalisé avant de changer la valeur de la variable à gauche de celui-ci.
+On utilisera très souvent ce genre de codes où la valeur d'une variable dépend de sa valeur précédente.
+
+\sourcecode{calcul.go}{Quelques opérations sur des variables}{prog:calcul}
+
+\exercice{Récupérez le fichier \file{calcul.go} sur \madoc{} puis exécutez-le.}
+
+\exercice{Écrivez un programme qui, à partir de deux variables contenant les chaînes de caractères \inlinecode{"Hello"} et \inlinecode{"World"} utilise la concaténation pour construire la chaîne \inlinecode{"Hello World!"} puis l'affiche. N'oubliez pas l'espace et le point d'exclamation.}
+
+\exercice{À l'aide d'un programme simple donnez la valeur de $(6x+4)/2$ quand $x$ vaut 5. Modifiez votre programme pour donner cette valeur quand $x$ vaut 7. Seule la valeur initiale d'une variable doit être modifiée pour passer d'un programme à l'autre.}
+
+\exercice{Écrivez un programme qui affiche \inlinecode{true} si un nombre entier stocké dans une variable \inlinecode{n} est strictement plus grand que 5 et qui affiche \inlinecode{false} sinon.}
+
+En Go on a accès à l'opération modulo, qui calcule le reste d'une division euclidienne (une division du entier par un entier).
+Ainsi \inlinecode{n \% m} calcule le reste de la division de \inlinecode{n} par \inlinecode{m}.
+On a par exemple \inlinecode{7 \% 2} qui vaut 1 car $7 = 2*3 + 1$ (quotient de $3$, reste de $1$).
+
+\exercice{Écrivez un programme qui, étant donné un temps $t$ en seconde, calcule son équivalent en heures/minutes/secondes et l'affiche. Le nombre de secondes et le nombre de minutes dans cet équivalent doivent bien sûr toujours être inférieurs à 60. Testez votre programme avec plusieurs temps $t$ différents afin d'avoir confiance dans le fait qu'il est correct.}
+
+\remarque{Il existe d'autres façon de déclarer une variable en Go. À la place de faire \inlinecode{var n int = 1} on peut faire \inlinecode{var n = 1} ou encore \inlinecode{n := 1}. Ceci utilise un mécanisme d'\emph{inférence de type}~: Go devine quel doit être le type de la variable \inlinecode{n} à partir de la valeur que l'on donne à celle-ci. Comme il est important d'être bien conscient des types des variables que l'on manipule, il vous est demandé de ne pas utiliser ces manières de déclarer les variables dans les cours d'initiation au développement.}
+
+\remarque{En plus de déclarer des variables on peut, en Go, déclarer des constantes. Pour cela on remplace simplement \inlinecode{var} par \inlinecode{const}. Les constantes fonctionnent comme les variables, mais on est obligé de les affecter à la déclaration (pas de valeur par défaut) et on ne peut plus les modifier ensuite.}
+
+\section{Tableaux}
+
+Un tableau est une variable particulière qui contient $n$ valeurs indexées par des entiers entre $0$ et $n-1$.
+Ces valeurs \emph{doivent toutes être du même type}.
+Cela peut être utile, par exemple, pour représenter des objets mathématiques, comme les vecteurs ou les matrices, ou pour représenter un ensemble ordonné de valeurs.
+
+\subsection{Déclaration}
+
+Pour déclarer un tableau on peut simplement créer une variable dont le type indique le type des valeurs qui seront contenues dans ce tableau, précédé de crochets.
+Par exemple, pour un tableau d'entiers, \inlinecode{[\,]int}.
+Le programme~\ref{prog:tabs} donne quelques exemples de déclarations de tableaux.
+
+\sourcecode{tabs.go}{Déclarations de tableaux}{prog:tabs}
+
+\exercice{Récupérez le fichier \file{tabs.go} sur \madoc{} puis exécutez-le. Quelle est la valeur par défaut d'une variable de type tableau ?}
+
+\subsection{Accès aux valeurs et affectations}
+
+Comme pour les autres variables on peut bien sûr affecter une valeur à une variable de type tableau en utilisant le signe \inlinecode{=}.
+Il faut cependant utiliser une syntaxe un peu plus complexe que pour les types de base pour représenter la valeur du tableau, comme on peut le voir dans le programme~\ref{prog:afftabs}.
+
+\sourcecode{tabs2.go}{Affectations de tableaux}{prog:afftabs}
+
+\exercice{Récupérez le fichier \file{tabs2.go} sur \madoc{} et exécutez-le. Modifiez-le ensuite pour affecter et afficher un tableau de chaînes de caractères contenant, dans cette ordre, les chaînes "Bonjour", "le" et "monde". Testez votre modification.}
+
+On peut aussi accéder à une valeur dans une case d'un tableau.
+Pour cela on va indiquer entre crochets après le nom du tableau le numéro de cette case.
+Le programme~\ref{prog:valtabs} montre ceci.
+On voit aussi qu'on peut affecter une valeur à une case d'un tableau sans modifier les autres en accédant à cette valeur et en utilisant le signe \inlinecode{=}.
+
+\sourcecode{tabs3.go}{Accès aux valeurs dans un tableau}{prog:valtabs}
+
+\important{Attention, les cases d'un tableau sont numérotées à partir de $0$~: la première case est la case $0$ et pas la case $1$.}
+
+\exercice{Récupérez le fichier \file{tabs3.go} sur \madoc{} et exécutez-le. Modifiez ce programme pour afficher la valeur de la dernière case du tableau. Testez votre code. Modifiez à nouveau le programme pour essayer d'afficher une case du tableau qui n'existe pas (la case numéro 50 par exemple). Testez votre code et analysez l'erreur qui s'affiche pour bien la comprendre.}
+
+\subsection{Taille}
+
+Pour éviter de dépasser les limites d'un tableau, il peut être utile de connaître sa longueur, c'est-à-dire son nombre de cases. On peut faire ceci en Go à l'aide de la fonction \inlinecode{len}, comme le montre le programme~\ref{prog:lentabs}.
+
+\sourcecode{tabs4.go}{Longueur d'un tableau}{prog:lentabs}
+
+\exercice{Récupérez le fichier \file{tabs4.go} sur \madoc{} et exécutez-le. Comment peut-on avoir le numéro de la dernière case d'un tableau \inlinecode{t} à partir du résultat de \inlinecode{len(t)} ? Qu'est-ce-que cela veut dire si on trouve que le numéro de cette case est -1 ?}
+
+\section{Boucles}
+
+Lorsqu'on exécute un programme Go tels qu'on les a vus jusqu'à présent, les lignes de code de la fonction \inlinecode{main} sont exécutées une à une, dans l'ordre où elles sont écrites, puis le programme s'arrête.
+Ceci ne permet pas de réaliser des calculs très intéressants (comment faire, par exemple, pour afficher l'un après l'autre tous les éléments contenus dans un tableau).
+On utilisera donc, en plus, des \emph{structures de contrôle} qui vont permettre d'exécuter certaines parties de notre code plus ou moins de fois et dans des ordres différents en fonction de \emph{conditions} sur les valeurs de variables ou sur les résultats de calculs.
+Ces structures de contrôle sont de deux types~: les \emph{conditionnelles} (que nous verrons un peu plus tard) et les boucles.
+
+\subsection{La boucle \inlinecode{for}, utilisation de base}
+
+Selon les langages de programmation qu'on utilise on a accès à plus ou moins de différents types de boucles (\inlinecode{for}, \inlinecode{while}, \inlinecode{do while}, etc), cependant, en Go, il n'existe qu'un seul type de boucle~: la boucle \inlinecode{for}.
+
+Le programme~\ref{prog:for} montre un premier exemple de boucle for, dans sa forme la plus simple.
+
+\sourcecode{for.go}{Boucle for}{prog:for}
+
+On peut schématiser cette boucle ainsi~: \inlinecode{for initialisation; condition; mise-à-jour \{code\}} où les différents éléments ont les caractéristiques suivantes~:
+\begin{description}
+\item[initialisation.] Création d'une variable de boucle, ici la variable est \inlinecode{i} et est initialisée à 0 par la code \inlinecode{i := 0}.
+\item[condition.] Condition sur la valeur de la variable de boucle qui indique quand la boucle doit continuer à s'exécuter. Ici, la boucle s'exécute tant que \inlinecode{i} est strictement plus petit que 10, ce qui est exprimé par le code \inlinecode{i < 10}.
+\item[mise-à-jour.] Changement appliqué à la variable de boucle à chaque \emph{itération} de celle-ci. Ici on ajoute 2 à \inlinecode{i}, ce qui est représenté par le code \inlinecode{i = i + 2}.
+\item[code.] Code qui est exécuté à chaque itération de la boucle.
+\end{description}
+
+En d'autres terme, cette boucle va initialiser une variable \inlinecode{i} à 0, puis exécuter le code \inlinecode{fmt.Println(i)}, puis changer la valeur de \inlinecode{i} en lui ajoutant 2, exécuter à nouveau le code, ajouter 2 à \inlinecode{i}, et ainsi de suite jusqu'à ce que en ajoutant 2 à \inlinecode{i} sa valeur devienne supérieure ou égale à 10.
+
+\exercice{Sans l'exécuter, indiquez ce qu'affiche le programme~\ref{prog:for}. Récupérez ensuite le fichier \file{for.go} sur \madoc{} et exécutez-le pour vérifier votre réponse.}
+
+\exercice{Écrivez un programme qui affiche tous les multiples de 5 compris entre 10 et 100 inclus. Testez votre programme pour vous assurer qu'il est correct.}
+
+\exercice{Écrivez un programme qui, à l'aide d'une boucle, affiche 10 fois \emph{Bonjour}.}
+
+\exercice{Écrivez un programme qui déclare un tableau d'entiers contenant 10 valeurs de votre choix puis qui, à l'aide d'une boucle \inlinecode{for}, affiche tous ces entiers dans l'ordre du tableau. Votre variable de boucle servira à déterminer le numéro de la case dont la valeur doit être affichée à chaque tour de boucle. La fonction \inlinecode{len} vous permettra d'arrêter votre boucle au bon moment. Testez votre programme. Modifiez la déclaration de votre tableau pour qu'il contienne maintenant 12 valeurs. Sans rien modifier d'autre, votre programme doit toujours fonctionner. Testez-le. Changez maintenant votre tableau pour qu'il ne contienne aucune valeur, votre programme doit toujours fonctionner (il n'affiche pas de valeurs puisque le tableau est vide, mais il ne doit pas non plus afficher d'erreur). Testez-le.}
+
+\remarque{En écrivant le programme de l'exercice précédent, vous avez sans doute mis-à-jour la variable de boucle en écrivant \inlinecode{i = i + 1}. Il existe un raccourci d'écriture pour cette opération~: \inlinecode{i++}}
+
+\exercice{Modifiez le programme \file{for.go} pour afficher la valeur de \inlinecode{i} après la fin de la boucle. Testez-le et expliquez l'erreur que vous observez.}
+
+\subsection{Variable de boucle déclarée à l'extérieur}
+
+On a vu, avec le dernier exercice, qu'une fois la boucle terminée, on ne pouvait plus accéder à la valeur de la variable de boucle.
+Ceci est dû au fait qu'une variable a une durée de vie limitée (pour économiser des ressources mémoire).
+Dans le cas de la boucle \inlinecode{for} précédente, la variable a été déclarée dans l'initialisation de la boucle, sa durée de vie est celle de la boucle, et par conséquent elle n'existe plus une fois que celle-ci est terminée.
+
+Si on a besoin d'accéder à une variable de boucle après la fin de celle-ci, il est possible en Go de déclarer cette variable en dehors de la boucle, comme le montre le programme~\ref{prog:forbis}.
+
+\sourcecode{for2.go}{Boucle for avec variable externe}{prog:forbis}
+
+\exercice{Récupérez le programme \file{for2.go} sur \madoc{} et testez-le.}
+
+\remarque{Si on déclare une variable dans le code exécuté par une boucle, cette variable est redéclaré à chaque tour de boucle~: sa durée de vie est celle d'une itération. Pour qu'une variable puisse être mise-à-jour par une boucle il faut donc aussi la déclarer à l'extérieur de celle-ci.}
+
+\exercice{Écrivez un programme qui déclare un tableau d'entiers contenant 10 valeurs de votre choix puis qui, à l'aide d'une boucle \inlinecode{for}, calcul la somme de ces 10 entiers. Testez-le. Modifiez la déclaration de votre tableau pour qu'il contienne maintenant 12 valeurs. Sans rien modifier d'autre, votre programme doit maintenant calculer la somme des 12 entiers. Testez-le}
+
+\subsection{Intermède~: le type \inlinecode{float64}}
+
+En Go il existe bien sûr un type pour représenter les nombre décimaux.
+Il s'agit du type \inlinecode{float64} (il existe en fait aussi \inlinecode{float32}).
+On peut donc déclarer une variable \inlinecode{x} contenant une valeur décimale en écrivant \inlinecode{var x float64}.
+Et on peut lui attribuer une valeur comme pour les autres types (la virgule se représente par un point)~: \inlinecode{x = 12.5} par exemple.
+
+\exercice{Écrivez un programme vous permettant de trouver quelle est la valeur par défaut d'une variable de type \inlinecode{float64}.}
+
+\exercice{Écrivez un programme qui à partir d'un tableau contenant les notes sur 20 d'un étudiant au cours d'un semestre calcule la moyenne de cet étudiant.}
+
+\subsection{Boucle avec seulement une condition}
+
+La condition utilisée pour définir la fin d'une boucle n'est en fait pas obligée de concerner la variable de boucle.
+On n'est d'ailleurs pas obligé d'avoir une variable de boucle.
+Le programme~\ref{prog:forcond} montre un exemple de boucle for sans variable de boucle, cette boucle n'a donc qu'une condition (pas d'initialisation et pas de mise-à-jour).
+
+\sourcecode{for3.go}{Boucle for sans variable de boucle}{prog:forcond}
+
+\exercice{Récupérez le fichier \file{for3.go} sur \madoc{}. Exécutez-le plusieurs fois en modifiant les valeurs affectées initialement aux variables \inlinecode{reste} et \inlinecode{diviseur}. Que calcule ce programme ?}
+
+\exercice{Écrivez sur le même modèle un programme qui calcul le produit de deux variables entières sans utiliser l'opération de multiplication}
+
+\exercice{Lors de la naissance de sa petite fille Anaïs, son grand-père lui a ouvert un compte épargne en y déposant 100€. À chaque anniversaire d'Anaïs, il verse sur ce compte un montant correspondant à 10 fois l'age qu'elle vient d'avoir. (Par exemple, à 5 ans, Anaïs va recevoir 50€.) En outre, le compte épargne d'Anaïs a un taux fixe de 3,5\% dont les intérêts sont versés à chaque date anniversaire. Écrivez un programme qui étant donné un montant en euros, indique à Anaïs l'age qu'elle devra avoir pour en disposer sur son compte.}
+
+\remarque{La syntaxe des boucles en Go est en fait un peu plus générale que ce que nous avons vu ici. On peut par exemple écrire une boucle infinie en laissant vide l'espace réservé à la condition de boucle~: \inlinecode{for \{code\}}.}
+
+\section{Conditionnelles}
+
+Nous allons maintenant nous intéresser à un deuxième type de structures de contrôle~: les conditionnelles.
+Ces structures permettent de faire des choix en fonction de valeurs de variables ou de résultats de calculs.
+
+\subsection{if}
+
+La conditionnelle la plus simple est le \inlinecode{if}, elle permet d'exécuter un code parmi deux en fonction d'une condition.
+Le programme~\ref{prog:if} montre un exemple d'utilisation de cette conditionnelle.
+
+\sourcecode{if.go}{Conditionnelle}{prog:if}
+
+Le schéma général du \inlinecode{if} est le suivant~: \inlinecode{if condition \{code1\} else \{code2\}}.
+Si la condition est vérifiée (dans l'exemple, si n est strictement inférieur à 5) alors on exécute le code \inlinecode{code1} (ici, afficher \emph{moins que 5}).
+Si la condition n'est pas vérifiée (dans l'exemple, si n est supérieur ou égal à 5) alors on exécute le code \inlinecode{code2} (ici, afficher \emph{5 ou plus}).
+On appellera \inlinecode{code1} et \inlinecode{code2} les \emph{branches} de la conditionnelle (qui est parfois appelée branchement).
+
+\exercice{Récupérez le fichier \file{if.go} sur \madoc{} et testez-le. Modifiez la valeur de \inlinecode{n} pour constater que le programme peut bien exécuter le code de l'une ou l'autre des branches de la conditionnelle.}
+
+\exercice{Un magasin propose à ses clients une remise de 5\% (arrondi à l'entier inférieur) sur le montant total des achats lorsque celui-ci dépasse 300€. Écrivez un programme qui à partir d'un montant d'achat en euros (stocké dans une variable entière) affiche la somme à payer par le client. Testez votre programme pour différents montants d'achats (en particulier des montants inférieurs à 300€ et des montants supérieurs à 300€)}
+
+\exercice{Écrivez un programme qui déclare trois variables entières puis trouve et affiche la valeur de la plus grande d'entre-elles. Testez-le pour différentes valeurs des variables.}
+
+\exercice{Écrivez un programme qui déclare deux variables entières puis indique si leur produit est positif, négatif ou nul sans calculer ce produit. Testez-le pour différentes valeurs des variables.}
+
+\exercice{Écrivez un programme qui indique si une année (stockée dans une variable entière) est bissextile ou non. Les années bissextiles sont celles qui sont divisibles par 400 ou divisibles par 4 mais pas par 100.}
+
+La partie \inlinecode{else} est facultative, si on l'omet le code est exécutée si la condition est vérifiée et il ne se passe rien sinon.
+Le programme~\ref{prog:noelse} en donne un exemple.
+
+\sourcecode{if2.go}{Conditionnelle sans \inlinecode{else}}{prog:noelse}
+
+Dans tous les cas le programme affiche \emph{Au revoir}, par contre il n'affiche \emph{Moins que 5} que si \inlinecode{n} est strictement inférieur à 5.
+
+\exercice{Récupérez le fichier \file{if2.go} sur \madoc{} et testez-le. Modifiez la valeur de \inlinecode{n} pour constater ce qu'il se passe lorsque la condition est vraie et lorsqu'elle est fausse.}
+
+\exercice{Écrivez un programme qui déclare un tableau d'entiers puis qui, à l'aide d'une boucle for, affiche ceux qui sont strictement inférieurs à 5, dans l'ordre du tableau. Testez votre programme pour plusieurs tableaux de tailles et de contenus différents.}
+
+\exercice{Écrivez un programme qui déclare un entier \inlinecode{n} et un tableau d'entiers puis qui compte (et affiche) combien de fois l'entier \inlinecode{n} apparaît dans le tableau. Testez votre programme pour plusieurs tableaux de tailles et de contenus différents, ainsi que pour plusieurs valeurs de \inlinecode{n}.}
+
+\subsection{Retour sur les boucles}
+
+On peut stopper une boucle de manière anticipée en utilisant le mot clé \inlinecode{break}~: au moment où ce mot clé est rencontré dans le code de la boucle, celle-ci se termine immédiatement.
+Ceci est particulièrement utile en combinaison avec des conditionnelles.
+Le programme~\ref{prog:break} montre un exemple d'utilisation de \inlinecode{break}.
+
+\sourcecode{break.go}{Utilisation de \inlinecode{break}}{prog:break}
+
+Dans ce programme, \inlinecode{n} tours de boucle devraient avoir lieu.
+Cependant, au sixième tour, quand la variable \inlinecode{i} vaut \inlinecode{p}, la condition de la conditionnelle est vérifiée.
+On exécute donc le code de la première (et seule) branche de cette conditionnelle, qui est un \inlinecode{break}, ce qui fait terminer la boucle.
+
+\exercice{Récupérez le fichier \file{break.go} et exécutez-le. Faites quelques tests en modifiant \inlinecode{n} et \inlinecode{p}, pour bien comprendre le fonctionnement de \inlinecode{break}.}
+
+\exercice{Écrivez un programme qui déclare un tableau d'entiers, puis affiche une à une, dans l'ordre, les valeurs contenues dans ce tableau à l'aide d'une boucle en s'arrêtant dès qu'il rencontre la valeur 3. Testez-le avec des tableaux contenant la valeur 3 et des tableaux ne la contenant pas.}
+
+Dans le même ordre d'idée, on peut stopper l'itération en cours d'une boucle (et passer directement au début de la suivante) en utilisant le mot clé \inlinecode{continue}.
+
+\exercice{Remplacez le mot clé \inlinecode{break} par le mot clé \inlinecode{continue} dans le programme du fichier \file{break.go}. Testez-le pour différentes valeurs de \inlinecode{n} et \inlinecode{p}.}
+
+\subsection{switch}
+
+Si on veut faire un choix entre plus de deux alternatives, on peut imbriquer des conditionnelles en enchaînant directement un \inlinecode{if} après un \inlinecode{else} comme le montre le programme~\ref{prog:ififif}.
+
+\sourcecode{if3.go}{Conditionnelles imbriquées}{prog:ififif}
+
+\exercice{Récupérez le fichier \file{if3.go} sur \madoc{} et testez-le pour différentes valeurs de \inlinecode{n}, de façon à observer les trois affichages possibles.}
+
+Si on a beaucoup d'alternatives, on se rend bien compte que cette imbrication de conditionnelles peut devenir peu pratique à écrire.
+On peut alors la remplacer par un \inlinecode{switch}, qui est une autre structure de contrôle.
+Le programme~\ref{prog:switch} est une réécriture du programme~\ref{prog:ififif} à l'aide d'un \inlinecode{switch}.
+
+\sourcecode{switch.go}{Switch}{prog:switch}
+
+\exercice{Récupérez le fichier \file{switch.go} sur \madoc{} et testez-le pour les mêmes valeurs de \inlinecode{n} que le programme précédent. Constatez que ces deux programmes semblent bien donner les mêmes résultats.}
+
+\remarque{Un \inlinecode{switch} teste les conditions de ses différents \inlinecode{case} une à une dans l'ordre et exécute uniquement le code correspondant à la première de ces conditions qui est vérifiée.}
+
+\section{Fonctions}
+
+On a utilisé dans le début de ce document le nom de fonction sans vraiment dire de quoi il s'agissait.
+Une fonction est un bout de code auquel on donne un nom et qui, à partir d'\emph{arguments} va retourner des résultats ou \emph{valeurs de retour}.
+Un intérêt des fonctions est d'éviter de réécrire plusieurs fois un même code (ce qui peut être source d'erreurs).
+
+La fonction \inlinecode{main} est une fonction particulière~: elle n'a pas d'arguments et ne retourne pas de résultats.
+De plus, elle est automatiquement appelée au début de l'exécution du programme.
+
+\subsection{Déclaration de fonction}
+
+Pour déclarer une fonction à un argument et une valeur de retour on utilise le mot clé \inlinecode{func} suivi du nom de la fonction, du nom et type de son argument entre parenthèses, du type de sa valeur de retour, puis d'accolades qui entourent le code de cette fonction.
+
+Pour utiliser cette fonction (on dit qu'on l'\emph{appelle}) on écrit simplement son nom suivi de la valeur qu'on souhaite utiliser pour son argument entre parenthèses.
+
+Le programme~\ref{prog:fonction} déclare une telle fonction \inlinecode{f} puis l'utilise à l'intérieur de la fonction \inlinecode{main} avec différentes valeurs de son argument.
+
+\sourcecode{func.go}{Déclaration de fonction}{prog:fonction}
+
+L'argument de la fonction \inlinecode{f} est un entier qui s'appelle \inlinecode{x}~: à l'intérieur du code de la fonction, quand on fait référence à \inlinecode{x} cela correspond à la valeur de cet argument.
+Cette fonction retourne (avec le mot clé \inlinecode{return}) un booléen.
+
+Quand on utilise, par exemple, \inlinecode{f(3)} cela correspond à exécuter le code de la fonction \inlinecode{f} avec \inlinecode{x} qui vaut 3, jusqu'à obtenir la valeur du \inlinecode{return} et à remplacer \inlinecode{f(3)} par cette valeur.
+
+\exercice{Récupérez le fichier \file{func.go} sur \madoc{} puis exécutez-le. Modifiez la valeur du \inlinecode{return} pour voir l'effet que cela a sur le programme. Essayez aussi d'appeler la fonction avec d'autres valeurs de son argument.}
+
+\exercice{Dans un nouveau programme, déclarez une fonction qui prend en paramètre un tableau d'entiers et retourne la valeur de la case 3 de ce tableau. Dans le \inlinecode{main} utilisez cette fonction avec plusieurs tableaux différents, en affichant à chaque fois le résultat obtenu.}
+
+\subsection{Fonctions à plusieurs arguments}
+
+Une fonction peut avoir plusieurs arguments, on les sépare par des virgules lors de la déclaration de la fonction et on sépare leurs valeurs par des virgules (en respectant leur ordre de déclaration) lors de l'appel de la fonction.
+
+Le programme~\ref{prog:fonc2} donne un exemple de déclaration et d'utilisation d'une fonction \inlinecode{g} à deux arguments.
+
+\sourcecode{func2.go}{Déclaration de fonction à plusieurs arguments}{prog:fonc2}
+
+Les arguments de \inlinecode{g} sont deux entiers qui s'appellent \inlinecode{x} et \inlinecode{y}.
+Cette fonction retourne un booléen qui indique si \inlinecode{x} est strictement plus petit que \inlinecode{y} ou pas.
+
+\exercice{Récupérez le fichier \file{func2.go} sur \madoc{} puis exécutez-le. Essayez d'appeler la fonction avec d'autres valeurs de ses arguments.}
+
+\exercice{Dans un nouveau programme, déclarez une fonction qui prend en paramètre un tableau d'entiers et un entier \inlinecode{n} et retourne la valeur de la case \inlinecode{n} de ce tableau. Dans le \inlinecode{main} utilisez cette fonction avec plusieurs tableaux différents et plusieurs valeurs de \inlinecode{n} différentes, en affichant à chaque fois le résultat obtenu.}
+
+\exercice{Deux nombres entiers positifs $n$ et $m$ sont dits amicaux si la somme des diviseurs de $n$ vaut $m$ et si la somme des diviseurs de $m$ vaut $n$. Écrivez une fonction qui calcul et retourne la somme des diviseurs d'un nombre entier positif donné en argument. Testez cette fonction sur plusieurs nombres en n'oubliant pas de tester les cas particuliers~: 0, nombres premiers, etc. Écrivez ensuite une fonction qui, à partir de la fonction précédente, indique (par un booléen) si deux nombres entiers positifs qui lui sont donnés en arguments sont amicaux ou pas. Testez cette fonction sur plusieurs couples de nombres.}
+
+\remarque{On peut bien sûr avoir plus de deux arguments pour un fonction.}
+
+\subsection{Fonctions retournant plusieurs valeurs}
+
+Une fonction peut aussi retourner plusieurs valeurs, comme le montre le programme~\ref{prog:fonc3}.
+
+\sourcecode{func3.go}{Fonctions retournant plusieurs valeurs}{prog:fonc3}
+
+Les types des valeurs de retour (ici \inlinecode{bool} et \inlinecode{int}) sont indiqués entre parenthèses et séparés par des virgules à la place habituelle du type de la valeur de retour.
+Le retour lui même est fait en indiquant les valeurs, dans le même ordre que leurs types ont été indiqués, séparées par des virgules (ici \inlinecode{x < y} et \inlinecode{x + y}).
+On peut récupérer ces valeurs dans des variables (ici \inlinecode{b}, et \inlinecode{n}) en les mettant à gauche d'un \inlinecode{=}, séparées par des virgules.
+
+\exercice{Récupérez le fichier \file{func3.go} sur \madoc{} puis exécutez-le. Essayez d'appeler la fonction avec d'autres valeurs de ses arguments.}
+
+\exercice{Dans un nouveau programme, déclarez une fonction qui prend en paramètre un tableau d'entiers et un entier \inlinecode{n} et retourne 0 et \inlinecode{false} si le tableau a moins de \inlinecode{n+1} cases et \inlinecode{true} et la valeur de la case \inlinecode{n} de ce tableau si le tableau à \inlinecode{n+1} cases ou plus. Dans le \inlinecode{main} utilisez cette fonction avec plusieurs tableaux différents et plusieurs valeurs de \inlinecode{n} différentes, en affichant à chaque fois le résultat obtenu.}
+
+\remarque{Comme on l'a vu dans l'exercice précédent, les fonctions à plusieurs valeurs de retour sont notamment utilisées en Go pour retourner le résultat d'un calcul et une information sur le succès ou l'échec de ce calcul en une seule fois. Quand vous utiliserez des fonctions provenant de bibliothèques vous verrez que c'est une pratique assez commune.}
+
+\remarque{On peut bien sûr avoir plus de deux valeurs de retour pour une fonction.}
+
+\exercice{Écrivez une fonction qui prend en arguments deux nombre décimaux $x$ et $e$ et indique (par un booléen) s'il existe un entier positif $n$ tel que $x^n < e$ et, si c'est le cas, retourne le plus petit $n$ vérifiant cette propriété. Dans votre \inlinecode{main} testez votre fonction pour plusieurs valeurs de $x$ et de $e$.}
+
+\end{document}

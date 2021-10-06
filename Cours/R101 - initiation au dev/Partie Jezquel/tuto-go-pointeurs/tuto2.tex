@@ -1,0 +1,449 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fullpage}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[hyperfootnotes=false]{hyperref}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%\usepackage[fontsize=18pt]{scrextend}
+%\usepackage{setspace}
+%\onehalfspacing
+
+%boxes
+\newcounter{saveFootnote}
+\usepackage{fancybox}
+\newcommand{\important}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\doublebox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\remarque}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\fbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\exercice}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\shadowbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+
+%code
+\usepackage{listings}
+\usepackage{color}
+\usepackage{newfloat}
+\usepackage{caption}
+\DeclareFloatingEnvironment[fileext=frm,placement={htbp},name=Programme]{figprog}
+\captionsetup[figprog]{labelfont=bf}
+%% Golang definition for listings
+%% http://github.io/julienc91/lstlistings-golang
+\lstdefinelanguage{Golang}{
+  morekeywords=[1]{package,import,func,type,struct,return,defer,panic,recover,select,var,const,iota,},
+   morekeywords=[2]{string,uint,uint8,uint16,uint32,uint64,int,int8,int16,int32,int64,bool,float32,float64,complex64,complex128,byte,rune,uintptr, error,interface},
+   morekeywords=[3]{map,slice,make,new,nil,len,cap,copy,close,true,false,delete,append,real,imag,complex,chan,},
+   morekeywords=[4]{for,break,continue,range,go,goto,switch,case,fallthrough,if,
+     else,default,},
+   morekeywords=[5]{Println,Printf,Error,Print,},
+   sensitive=true,
+   morecomment=[l]{//},
+   morecomment=[s]{/*}{*/},
+   morestring=[b]',
+   morestring=[b]",
+   morestring=[s]{`}{`}
+   }
+\lstset{
+    extendedchars=\true,
+    inputencoding=utf8,
+    literate=%
+            {é}{{\'{e}}}1
+            {è}{{\`{e}}}1
+            {ê}{{\^{e}}}1
+            {ë}{{\¨{e}}}1
+            {û}{{\^{u}}}1
+            {ù}{{\`{u}}}1
+            {â}{{\^{a}}}1
+            {à}{{\`{a}}}1
+            {î}{{\^{i}}}1
+            {ô}{{\^{o}}}1
+            {ç}{{\c{c}}}1
+            {Ç}{{\c{C}}}1
+            {É}{{\'{E}}}1
+            {Ê}{{\^{E}}}1
+            {À}{{\`{A}}}1
+            {Â}{{\^{A}}}1
+            {Î}{{\^{I}}}1,
+    frame=none,
+    xleftmargin=1cm,
+    basicstyle=\footnotesize,
+    keywordstyle=\bf\color{blue},
+    numbers=none,
+    numbersep=5pt,
+    showstringspaces=false,
+    stringstyle=\color{red},
+    tabsize=4,
+    language=Golang % this is it !
+}
+\newcommand{\sourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{10cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+\newcommand{\bigsourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{16cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+
+% macros générales
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\madoc}{\textsc{Madoc}}
+\newcommand{\term}[1]{\textsf{#1}}
+\newcommand{\inlinecode}[1]{\textsf{#1}}
+\newcommand{\goout}[1]{\textsf{#1}} % retours de go, erreurs, etc
+
+\title{Les bases du langage Go\\ Partie 2~: pointeurs, tableaux, arguments}
+\author{Initiation au développement}
+\date{BUT informatique, première année}
+
+\begin{document}
+
+\maketitle{}
+
+Ce TP a pour but de vous présenter les bases du langage Go.
+C'est ce langage qui sera utilisé pour réaliser tous les exercices de ce cours d'initiation au développement. Il n'y a pas de prérequis particuliers en dehors du contenu du TP précédent (les bases du langage Go partie 1).
+
+\important{Dans tout ce TP un texte avec cet encadrement est un texte contenant une information importante, il faut donc le lire avec attention et veiller à en tenir compte.}
+
+\remarque{Un texte avec cet encadrement est une remarque.}
+
+\exercice{Un texte avec cet encadrement est un travail que vous avez à faire.}
+
+\important{Même si la plupart des exercices de ce TP peuvent vous sembler très faciles, faites les tous sérieusement~: cela vous permettra de retenir la syntaxe du langage Go et d'être ainsi plus à l'aise lors des prochains TPs.}
+
+\remarque{Si vous souhaitez avoir un autre point de vue sur l'apprentissage du langage Go, vous pouvez consulter le tutoriel officiel \emph{A Tour of Go}\footnotemark{} ou le site \emph{Go by Example}\footnotemark{} en faisant toute fois attention au fait que ces sites sont plutôt faits pour les personnes ayant déjà une bonne expérience de la programmation.}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://tour.golang.org/}}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://gobyexample.com/}}
+
+\newpage{}
+
+\section{Les pointeurs}
+
+Les pointeurs sont des variables avec un type particulier et qui permettent de stocker l'endroit ou des valeurs sont situées en mémoire (leur adresse mémoire) plutôt que directement ces valeurs.
+Nous allons voir comment fonctionnent les pointeurs en Go et à quoi ils peuvent servir.
+
+\subsection{Passage d'arguments par référence et passage d'arguments par valeur}
+
+Si on considère une fonction déclarée par \inlinecode{func f(x int, y int)}, on appelle \inlinecode{x} et \inlinecode{y} les \emph{arguments} de cette fonction.
+Dans un langage de programmation qui offre la possibilité d'avoir des fonctions (comme le Go) on peut imaginer essentiellement deux mécanismes pour donner des arguments lors d'un appel de fonction (on parle de \emph{passer} les arguments à la fonction).
+Pour simplifier la présentation de ces mécanismes, on peut considérer que chaque variable d'un programme est une boîte qui contient une valeur.
+
+\paragraph{Passage d'arguments par valeur.}
+Si les arguments sont passés \emph{par valeur} cela signifie que lorsqu'on appelle notre fonction \inlinecode{f} en écrivant \inlinecode{f(n, m)} ce sont les valeurs contenues dans les boîtes \inlinecode{n} et \inlinecode{m} qui vont être utilisées par la fonction et pas les boîtes elles-mêmes.
+
+Ceci est sans doute plus clair sur un exemple.
+Si le passage des arguments se fait par valeur, alors à la fin du programme~\ref{prog:valeurs} la valeur de \inlinecode{n} n'aura pas changé~: appeler \inlinecode{f(n, m)} ou \inlinecode{f(1, 2)} ne fait aucune différence.
+
+\sourcecode{valeur-reference.go}{Passage d'arguments par valeur ou par référence ?}{prog:valeurs}
+
+\paragraph{Passage d'arguments par référence.}
+Si les arguments sont passés par \emph{référence}, lors d'un appel à \inlinecode{f(n, m)} on passe à la fonction directement les boîtes \inlinecode{n} et \inlinecode{m}.
+Et donc cette fonction peut modifier le contenu des boîtes, ce qui lui permet de changer la valeur d'une variable qu'on lui passe en argument.
+Dans ce cas, à la fin du programme~\ref{prog:valeurs} la variable \inlinecode{n} aura changé, elle contiendra maintenant la valeur 3.
+
+\exercice{Proposez un moyen de déterminer si, en Go, le passage d'arguments se fait par valeur ou par référence (vous pouvez pour cela récupérer le fichier \file{valeur-reference.go} sur \madoc{}) et mettez-le en œuvre.}
+
+\subsection{Pointeurs}
+
+Le passage d'arguments par référence est quand même parfois utile.
+Pour y avoir accès on utilise ce qu'on appelle des \emph{pointeurs}.
+
+Pour représenter les pointeurs on utilise le symbole \inlinecode{*}, qu'on peut associer à n'importe quel type. Ainsi, par exemple, \inlinecode{*int} est le type d'un pointeur vers un \inlinecode{int} et \inlinecode{*bool} celui d'un pointeur vers un \inlinecode{bool}.
+Si on reprend l'analogie des boîtes, une variable de type \inlinecode{int} est une boîte qui contient un entier alors qu'une variable de type \inlinecode{*int} est une boîte qui contient une boîte qui elle-même contient un entier.
+
+Si \inlinecode{n} est une variable vous savez accéder à son contenu, il suffit d'écrire son nom.
+Mais, si on souhaite accéder à l'entier correspondant à \inlinecode{a} de type \inlinecode{*int} c'est un peu plus compliqué~: il faut récupérer la valeur qui est dans la boîte contenue dans \inlinecode{a}.
+Pour cela on écrit \inlinecode{*a} et on dit qu'on déréférence le pointeur \inlinecode{a}.
+Parfois, on peut aussi avoir besoin d'accéder à la boîte correspondant à une variable \inlinecode{n}, par exemple pour la mettre dans une autre boîte.
+Pour cela on peut écrire \inlinecode{\&n}.
+
+Le programme~\ref{prog:pointeurs} donne quelques exemples d'utilisation.
+
+\sourcecode{pointeurs.go}{Exemples sur les pointeurs}{prog:pointeurs}
+
+\exercice{Récupérez le fichier \file{pointeurs.go} sur \madoc{} et exécutez-le. En utilisant l'analogie des boîtes présentée plus haut, représentez ce qu'il se passe lors de l'exécution de ce programme.}
+
+\exercice{Quelle est la valeur par défaut d'une variable de type \inlinecode{*int} ? Que se passe-t-il quand on essaye de déréférencer un tel pointeur ? Expliquez cela à l'aide de l'analogie des boîtes.}
+
+Si on a une variable \inlinecode{a} de type \inlinecode{*int} on peut bien sûr aussi modifier le valeur contenue dans la boîte contenue dans \inlinecode{a}.
+Il suffit pour cela d'utiliser la notation \inlinecode{*a}, permettant d'accéder à cette valeur, à gauche d'un signe \inlinecode{=}, par exemple \inlinecode{*a = 5}.
+
+\exercice{Modifiez le fichier \file{pointeurs.go} pour, après le programme actuel, mettre la valeur 12 dans la boîte contenue dans \inlinecode{a} puis afficher la valeur contenue dans cette boîte. Testez-votre programme. Affichez après cela la valeur contenue dans \inlinecode{m}. Que remarquez-vous ? Expliquez cette observation à l'aide de l'analogie des boîtes.}
+
+Puisque on peut avoir un pointeur vers un objet de n'importe quel type, on peut aussi avoir un pointeur vers un pointeur (et un pointeur vers un pointeur vers un pointeur, etc).
+Il suffit pour cela de rajouter une étoile devant~: \inlinecode{**int} est une boîte qui contient une boîte, qui contient une boîte, qui contient un entier.
+Le programme~\ref{prog:pointeurs2} donne un exemple de cela.
+
+\sourcecode{pointeurs2.go}{Pointeurs de pointeurs}{prog:pointeurs2}
+
+\exercice{Récupérez le ficher \file{pointeurs2.go} sur \madoc{} puis exécutez-le. Expliquez ce que vous observez à l'aide de l'analogie des boîtes.}
+
+\remarque{L'analogie des boîtes a ses limites et n'est pas toujours totalement intuitive~: il est tout à fait possible d'avoir deux pointeurs qui indiquent la même adresse mémoire, c'est-à-dire deux boîtes qui contiennent la même boîte.}
+
+\subsection{Pointeurs et passage d'arguments par référence}
+
+Une utilité importante des pointeurs est de permettre de simuler le passage d'arguments par référence.
+Dans le programme~\ref{prog:simulref} l'effet de la fonction \inlinecode{fval} sur \inlinecode{n} est exactement le même que celui de la fonction \inlinecode{fref} sur \inlinecode{m}.
+Cependant, cette deuxième tire profit des pointeurs pour simuler un passage d'arguments par référence.
+
+\sourcecode{valeur-reference2.go}{Passage d'arguments par référence}{prog:simulref}
+
+\exercice{Récupérez le fichier \file{valeur-reference2.go} sur \madoc{} et exécutez-le. Ajoutez éventuellement des affichage (\inlinecode{fmt.Println}) pour mieux voir ce qui se passe. Expliquez ce qui se passe lors des deux appels de fonctions en utilisant l'analogie des boîtes.}
+
+\exercice{Récupérez le fichier \file{unefonction.go} sur \madoc{}, lisez son code puis exécutez-le. Modifiez la fonction \inlinecode{f} et ses appels de façon à simuler le passage d'arguments par référence (sur le modèle de l'exemple précédent avec \inlinecode{fval} et \inlinecode{fref}). Testez votre code pour vérifier que les affichages restent les mêmes.}
+
+\remarque{Déréférencer un pointeur à un coût supérieur au simple accès à la valeur d'une variable. Cependant, passer les arguments par valeurs a aussi un coût (celui de la copie des valeurs) qui peut être important pour certains types un peu complexes (nous verrons leur utilité et comment en définir soit-même plus tard).}
+
+\section{Retour sur les tableaux}
+
+\exercice{Écrivez une fonction qui prend en argument un tableau d'entiers et ajoute 1 à chaque valeur contenue dans celui-ci. Testez votre fonction sur plusieurs tableaux.}
+
+La fonction que vous avez écrite prend en argument un tableau d'entiers et pas un pointeur vers un tableau d'entiers.
+Pourtant, les valeurs contenues dans le tableau sont bien modifiées.
+Cela veut dire que le passage de l'argument s'est fait par référence.
+Nous allons maintenant essayer de bien comprendre cela.
+
+\subsection{Tableaux, \emph{slices} et pointeurs}
+
+En réalité, en Go, il existe deux types de tableaux.
+Nous utiliserons leurs noms anglais pour les distinguer~: \emph{array} et \emph{slice}.
+
+\paragraph{Array.}
+Un \emph{array} est un tableau de taille fixe, sa taille faisant partie intégrale de son type.
+Ainsi, nous avons des tableaux d'entiers de longueur 1, 2, 3, etc, qui sont des types différents, qu'on note \inlinecode{[1]int, [2]int, [3]int, etc}.
+Un tel tableau de taille \inlinecode{n} correspond juste à \inlinecode{n} espaces mémoire contigus de la taille d'un élément du tableau.
+Ces tableaux sont des valeurs normales et sont donc passés par valeur aux fonctions, comme on peut le voir dans le programme~\ref{prog:array}.
+
+\sourcecode{array.go}{Tableau de taille fixe}{prog:array}
+
+\exercice{Récupérez le fichier \file{array.go} sur \madoc{} et exécutez-le. Constatez que le tableau \inlinecode{tab} n'est pas modifié par la fonction \inlinecode{f}. Modifiez le code en utilisant un pointeur pour faire en sorte que la fonction \inlinecode{f} modifie \inlinecode{tab}.}
+
+\exercice{Concevez un programme permettant de savoir quelle est la valeur par défaut d'une variable de type \inlinecode{[5]int}, d'une variable de type \inlinecode{[3]string} et d'une variable de type \inlinecode{[1]bool}. Testez-le.}
+
+\paragraph{Slice.}
+Les tableaux que nous avons utilisés dans le précédent sujet sont des tableaux de taille variable, qu'on appelle \emph{slice} en anglais.
+Il n'existe qu'un seul type de \emph{slice} d'entiers, qu'on note \inlinecode{[]int}.
+Un \emph{slice} est constitué de trois éléments~: un entier indiquant sa taille, un entier indiquant sa capacité (nous reviendrons là dessus un peu plus tard) et un pointeur vers un \emph{array}.
+Quand on accède à une case d'un \emph{slice} c'est donc légèrement différent de quand on accède à une case d'un \emph{array}~: il y a un déréférencement qui a lieu.
+Ainsi, dans le programme~\ref{prog:slice} la fonction \inlinecode{f} modifie vraiment le tableau \inlinecode{tab}.
+
+\sourcecode{slice.go}{Tableau de taille variable}{prog:slice}
+
+\exercice{Récupérez le fichier \file{slice.go} sur \madoc{} et exécutez-le. Constatez que le tableau \inlinecode{tab} est modifié par la fonction \inlinecode{f}.}
+
+Il est assez rare qu'on utilise les \emph{array} en Go, à partir de maintenant nous nous concentrerons sur les \emph{slices}, que nous appellerons simplement tableaux.
+
+\subsection{Découpages}
+
+Il est possible de récupérer une partie d'un tableau et de la stocker dans un autre tableau.
+Ceci se fait en écrivant entre crochets, séparés par le symbole \inlinecode{:}, les indices de début et de fin (exclu) de la partie de tableau qu'on souhaite couper.
+Le programme~\ref{prog:slice2} montre quelque exemples de cette opération.
+
+\sourcecode{slice2.go}{Découpages de tableaux}{prog:slice2}
+
+\exercice{Récupérez le fichier \file{slice2.go} sur \madoc{} et exécutez-le. Que se passe-t-il quand on ne met pas d'indice de début ? Que se passe-t-il quand on ne met pas d'indice de fin ?}
+
+\exercice{Récupérez le fichier \file{slice3.go} sur \madoc{} et exécutez-le. Expliquez à l'aide de l'analogie des boîtes ce que vous observez.}
+
+\important{Attention, quand on découpe des tableaux le résultat qu'on obtient est stocké en mémoire au même endroit que le tableau de départ (plus précisément, les pointeurs des deux tableaux indiquent le même tableau — \emph{array} — sous-jacent). Si l'on modifie l'un, cela modifie aussi l'autre.}
+
+\subsection{Un peu plus sur les chaînes de caractères}
+
+Les chaînes de caractères (\inlinecode{string}) se manipulent comme des tableaux.
+On peut accéder à un caractère d'une chaîne \inlinecode{s} par son indice, par exemple \inlinecode{s[2]} pour le troisième caractère.
+On peut donc aussi découper les chaînes de caractères avec la syntaxe vue juste au dessus.
+
+\exercice{Écrivez une fonction qui prend en argument une chaîne de caractères constituée de deux mots séparés par un espace et retourne deux chaînes de caractères, chacune contenant l'un des deux mots. Afin de vérifier si un caractère d'une chaîne est un espace on peut le comparer à \inlinecode{' '}, par exemple \inlinecode{s[2] == ' '} vaut \inlinecode{true} si le troisième caractère de \inlinecode{s} est un espace et \inlinecode{false} sinon. Testez votre fonction sur plusieurs exemples.}
+
+\subsection{Création de tableaux}
+
+Jusqu'à présent, on a toujours créé nos tableaux en indiquant directement leur contenu.
+Cependant, on peut parfois vouloir simplement créer un tableau d'une taille donnée, sans pour autant spécifier ce qui va dedans, par exemple quand on va remplir ce tableau par la suite en fonction de résultats de calculs.
+Le programme~\ref{prog:make} montre quelques exemples.
+
+\sourcecode{slice4.go}{Création de tableaux}{prog:make}
+
+Dans ce programme on utilise \inlinecode{make}, qui prend deux arguments, pour créer nos tableaux.
+Le premier argument qu'on doit donner est le type du tableau à créer (\inlinecode{[]int}, \inlinecode{[]bool}, \inlinecode{[]string}, etc).
+Le deuxième argument est un entier qui sert à indiquer la taille du tableaux qu'on veut créer.
+
+\exercice{Récupérez le fichier \file{slice4.go} sur \madoc{} et exécutez-le. Quelles sont les valeurs contenues dans un tableau créé à l'aide de \inlinecode{make} ?}
+
+\exercice{Écrivez une fonction qui prend en argument un entier \inlinecode{n}, crée un tableau contenant les \inlinecode{n} premiers multiples de 7, et retourne ce tableau. Testez-votre fonction pour plusieurs valeurs de \inlinecode{n} (0, 5, 100, etc).}
+
+\subsection{Agrandissement et capacité}
+
+On a appelé les \emph{slices} tableaux de taille variable, mais, pour le moment, on n'a vu que le moyen de réduire leur taille en les découpant.
+Il est aussi possible d'augmenter la taille d'un tableau.
+Ceci se fait en utilisant la fonction \inlinecode{append}.
+
+\paragraph{La fonction append.}
+Cette fonction prend en arguments un tableau et un élément et retourne un tableau correspondant au tableau donné en argument à la suite duquel l'élément donné en argument a été ajouté.
+Le programme~\ref{prog:append} montre un exemple.
+
+\sourcecode{slice5.go}{Agrandissement de tableau}{prog:append}
+
+\exercice{Récupérez le fichier \file{slice5.go} sur \madoc{} et exécutez-le.}
+
+\paragraph{La capacité.}
+On a indiqué précédemment qu'un tableau possède, en plus de sa taille, une capacité.
+Celle-ci correspond à une quantité d'espace réservée pour stocker le tableau~: la taille du tableau est son nombre d'éléments, sa capacité est son nombre d'éléments potentiels.
+On peut voir la capacité comme la taille de l'\emph{array} sous-jacent.
+Elle peut se définir en ajoutant un troisième argument à \inlinecode{make} lorsque l'on crée un tableau, et on peut la connaître en utilisant la fonction \inlinecode{cap}.
+Le programme~\ref{prog:capacite} montre quelques exemples.
+
+\sourcecode{slice6.go}{Capacité de tableau}{prog:capacite}
+
+\exercice{Récupérez le fichier \file{slice6.go} sur \madoc{} et exécutez-le. Quelle est la capacité d'un tableau créé par \inlinecode{make} lorsqu'on n'indique que la taille de ce tableau ? Quelle est-elle lorsqu'on crée le tableau sans utiliser \inlinecode{make} ?}
+
+\paragraph{Lien entre append et capacité}
+Lorsqu'on utilise \inlinecode{append} le résultat va varier en fonction de la capacité~: si celle-ci est suffisante, l'élément sera ajouté dans l'\emph{array} sous-jacent, c'est-à-dire au même endroit dans la mémoire que le tableau d'origine.
+Par contre, si la capacité est insuffisante, le tableau d'origine sera copié dans un espace plus grand, puis l'élément sera ajouté à la suite.
+Le programme~\ref{prog:appendcap} permet de mieux comprendre cela.
+
+\bigsourcecode{slice7.go}{Changement de capacité}{prog:appendcap}
+
+\exercice{Récupérez le fichier \file{slice7.go} sur \madoc{} et exécutez-le.}
+
+Au début, on peut observer que lorsqu'on modifie la première case de \inlinecode{t} cela change aussi le contenu de la première case de \inlinecode{tab}.
+En effet, ces deux tableaux correspondent au même espace en mémoire (ils ont le même tableau sous-jacent).
+On remarque ensuite que, au tour de boucle 4, la taille de \inlinecode{t} devient égale à sa capacité.
+Au tour suivant la capacité de \inlinecode{t} a augmenté~: le tableau a été copié dans un espace plus grand.
+On voit que c'est bien une copie car à partir de ce moment, modifier la première case de \inlinecode{t} n'affecte plus la première case de \inlinecode{tab}.
+
+\exercice{Testez à nouveau le programme du fichier \file{slice7.go} en modifiant les valeurs de \inlinecode{length}, \inlinecode{capacity} et \inlinecode{max}. Essayez d'en déduire une règle sur la façon dont la capacité d'un tableau est augmentée lorsque c'est nécessaire.}
+
+\remarque{Le fait de copier un tableau a un coût, c'est pour essayer d'éviter au maximum les copies quand on ajoute des éléments qu'on permet de réserver un espace mémoire plus grand que nécessaire pour nos tableaux (grâce à la capacité).}
+
+\paragraph{Lien entre découpages et capacité}
+Lorsqu'on découpe un tableau, comme on l'a vu plus haut, on peut se demander quelle sera sa capacité.
+Ceci peut se déterminer expérimentalement.
+
+\exercice{Récupérez le fichier \file{slice8.go} sur \madoc{}. Exécutez-le pour différentes valeurs des variables \inlinecode{length}, \inlinecode{capacity}, \inlinecode{start} et \inlinecode{end} et déduisez-en comment sont calculées la taille et la capacité d'un découpage de tableau. Testez aussi des valeurs de \inlinecode{end} qui dépasse la taille ou même la capacité de \inlinecode{tab}.}
+
+\subsection{Copies de tableaux}
+
+On l'a vu dans les parties précédentes~: les tableaux peuvent s'avérer complexes et il est parfois difficile de savoir si deux tableaux partagent un même espace mémoire (et donc si modifier l'un affectera l'autre) ou pas.
+
+Lorsqu'on a besoin de récupérer tout ou partie d'un tableau dans un autre, en s'assurant que les deux tableaux sont indépendants, on peut utiliser la fonction \inlinecode{copy}.
+Le programme~\ref{prog:copy} donne un exemple d'utilisation de cette fonction.
+
+\sourcecode{slice9.go}{Copie de tableau}{prog:copy}
+
+On peut observer que la fonction \inlinecode{copy} s'appelle avec deux arguments.
+Le premier est la destination~: l'endroit où on va placer la copie.
+Le deuxième est la source~: le tableau qui doit être copié.
+
+\exercice{Récupérez le fichier \file{slice9.go} sur \madoc{} et exécutez-le.}
+
+En testant, on se rend compte que lorsqu'on modifie la première case du tableau \inlinecode{t} cela n'a pas d'effet sur le tableau \inlinecode{tab}.
+On à bien réalisé une copie.
+
+\exercice{Dans le fichier \file{slice9.go} faites varier la taille et la capacité du tableau \inlinecode{t} et la taille du tableau \inlinecode{tab}. Que se passe-t-il quand la taille de \inlinecode{t} est inférieure à celle de \inlinecode{tab} ? Que se passe-t-il quand la capacité de \inlinecode{t} est inférieure à la taille de \inlinecode{tab} ?}
+
+\subsection{Tableaux de tableaux (de tableaux de tableaux\dots{})}
+
+Puisqu'on peut créer un tableau d'éléments de n'importe quel type, on peut aussi créer des tableaux de tableaux.
+Le programme~\ref{prog:tabdetab} donne un exemple.
+
+\sourcecode{tabtab.go}{Tableau de tableaux}{prog:tabdetab}
+
+Dans ce programme on observe tout d'abord la création d'un tableau de tableaux d'entiers.
+Ici on dit explicitement le contenu de notre tableau.
+Son type est \inlinecode{[][]int} donc sont contenu est écrit sous la forme \inlinecode{[][]int\{contenu\}}.
+Les éléments qu'il contient sont des tableaux d'entiers (type \inlinecode{[]int}) donc chacun d'entre eux est déclaré exactement comme on l'a vu avant~: \inlinecode{[]int\{contenu\}}.
+
+Ensuite, on voit comment accéder aux éléments de ce tableau~: \inlinecode{tab} fait référence à tout le tableau, \inlinecode{tab[i]} fait référence au tableau d'entiers numéro $i$ dans le tableau de tableaux, et \inlinecode{tab[i][j]} fait référence à l'entier numéro $j$ de ce tableau numéro $i$.
+
+\exercice{Récupérez le fichier \file{tabtab.go} sur \madoc{} et exécutez-le.}
+
+On peut bien sûr utiliser \inlinecode{make} pour créer des tableaux de tableaux.
+Il faudra alors bien penser à initialiser (par exemple avec \inlinecode{make}), si nécessaire, chacun des tableaux de notre tableau de tableaux.
+
+\exercice{Écrivez un programme qui initialise un tableau \inlinecode{t} de \inlinecode{n} tableaux de taille \inlinecode{m}, puis qui le rempli de telle sorte que \inlinecode{t[i][j]} soit égal à $i\times j$. On construit donc un tableau contenant les tables de multiplication de 0 à \inlinecode{n-1}, chacune rangée dans un tableau. Testez votre programme pour différentes valeurs de \inlinecode{n} et \inlinecode{m}.}
+
+\remarque{Vous pouvez trouver une très bonne explication, plus détaillée, du fonctionnement interne des tableaux en Go sur le site \file{go.dev}\footnotemark}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://go.dev/blog/slices-intro}}
+
+\section{Arguments de la ligne de commande}
+
+Dans les exercices précédents on a souvent testé des programmes pour différentes valeurs de variables.
+Pour cela, il fallait à chaque fois modifier le code du programme puis utiliser la commande \term{go run} (qui elle-même compile le fichier et l'exécute).
+Ce n'est pas forcément raisonnable de faire cela~: modifier le code à chaque fois est source d'erreurs et la compilation a un coût (en énergie et en temps, faible pour les programmes que vous avez écrits jusqu'à présent, mais qui peut être beaucoup plus élevé dès que les programmes deviennent plus complexes).
+
+Nous allons voir dans cette partie comment il est possible de modifier les valeurs de certaines variables au moment de l'exécution d'un programme : sans avoir à la recompiler et sans avoir à modifier le code source.
+
+\subsection{Séparer la compilation de l'exécution}
+
+Quand on exécute un programme \file{prog.go} en utilisant la commande \term{go run prog.go} cela donne en réalité lieu (de manière transparente) à deux étapes~: la compilation, qui permet de produire un fichier exécutable à partir du fichier source, puis l'exécution qui permet de faire fonctionner le programme.
+
+Parfois on souhaite exécuter un programme plusieurs fois, sans avoir modifié son code.
+Il n'est alors pas raisonnable de le recompiler à chaque fois.
+On peut séparer la compilation de l'exécution en utilisant la commande \term{go build} à la place de \term{go run}.
+
+\exercice{Compilez le programme \file{tabtab.go} en utilisant la commande \term{go build tabtab.go} à la place de \term{go run tabtab.go}. Vous obtenez normalement un fichier exécutable nommé \file{tabtab}.}
+
+Le fichier exécutable obtenu par la compilation peut ensuite être utilisé en tapant dans le terminal un chemin vers ce fichier.
+Si vous vous situez dans le répertoire où est le fichier exécutable \file{prog} vous pouvez utiliser la commande \term{./prog} pour l'exécuter.
+
+\exercice{Exécutez le programme \file{tabtab} créé précédemment et vérifiez que vous obtenez bien le même résultat qu'en faisant directement \term{go run tabtab.go}.}
+
+\subsection{Définir des valeurs à l'exécution}
+
+Lorsque vous utilisez une commande dans un terminal, vous indiquez d'abord le nom de cette commande, puis un certain nombre d'\emph{arguments} séparés par des espaces.
+Le résultat de la compilation d'un programme Go est une commande, vous pouvez donc lui donner des arguments.
+Ainsi, si j'ai construit un exécutable \file{prog} je peux utiliser la commande \term{./prog 12 bonjour} pour lui donner les arguments 12 et \emph{bonjour}.
+Il est ensuite possible pour le programme de récupérer et d'utiliser ces arguments.
+Pour cela on utilise la bibliothèque \inlinecode{os} (qu'il faudra penser à importer).
+
+Le programme~\ref{prog:arguments} donne un exemple de récupération d'arguments dans un programme Go à l'aide de la bilbiothèque \inlinecode{os}.
+
+\sourcecode{args.go}{Récupération d'arguments avec la bibliothèque \inlinecode{os}}{prog:arguments}
+
+Une fois la bibilothèque \inlinecode{os} importée on a accès à un tableau \inlinecode{os.Args} qui contient le nom du programme exécuté, suivi des arguments donnés à ce programme.
+On peut donc obtenir le nombre d'arguments en regardant la longueur de ce tableau.
+Et on peut accéder aux arguments dans les cases du tableau.
+
+\remarque{On notera que l'importation de plusieurs bibliothèque peut se faire en les listant toutes, une par ligne, entre parenthèse après le \inlinecode{import}.}
+
+\exercice{Récupérez le fichier \file{args.go} et compilez-le avec \term{go build}. Testez le fichier exécutable obtenu (\file{args}) avec différents nombres et types d'arguments.}
+
+\exercice{Exécutez le fichier \file{args.go} avec \term{go run}. Où se trouve le programme compilé par cette commande ?}
+
+\exercice{Écrivez un programme qui stocke son premier argument dans une variable entière. Compilez-le avec \term{go build}. Que pouvez-vous déduire sur la nature des arguments récupérés par un programme ?}
+
+On dispose d'un certain nombre de fonctions utiles pour transformer des chaînes de caractères en d'autres types.
+Nous ne les verrons pas toutes ici, mais pour interpréter une chaîne de caractères comme un entier on peut utiliser \inlinecode{strconv.Atoi} qui provient de la bibliothèque \inlinecode{strconv}.
+Cette fonction prend en argument une chaîne de caractère et retourne un entier et une erreur.
+L'erreur sert à savoir s'il y a eu un problème durant la conversion (si elle vaut \inlinecode{nil} c'est que tout s'est bien passé).
+L'entier est l'interprétation de la chaîne de caractères sous forme d'entier.
+Pour plus de précisions, n'hésitez pas à consulter la documentation.
+
+\exercice{Modifiez votre programme précédent pour convertir votre argument en entier avant de le stocker dans votre variable (n'oubliez pas de récupérer l'erreur dans une autre variable). Compilez à nouveau votre programme (\term{go build}). Testez-le ensuite pour différentes valeurs d'argument (y compris des arguments qui ne sont pas des entiers), ainsi que sans argument. Analysez les résultats et les erreurs obtenues.}
+
+Tout ceci est sans doute un peu laborieux pour récupérer des arguments.
+Il existe une bibliothèque pour vous simplifier la vie~: la bibliothèque \inlinecode{flag}.
+
+\subsection{La bibliothèque flag}
+
+La bibliothèque \inlinecode{flag} peut se charger pour vous de mettre les arguments d'un programme dans des variables, en s'assurant qu'ils ont le bon type et même en leur donnant une valeur par défaut.
+Le programme~\ref{prog:flag} donne un exemple d'utilisation de cette bibliothèque.
+
+\sourcecode{flag.go}{Utilisation de la bibliothèque \inlinecode{flag}}{prog:flag}
+
+Dans ce programme on commence par déclarer un entier \inlinecode{n}.
+
+Ensuite on utilise la fonction \inlinecode{flag.IntVar} qui prépare la lecture d'un argument de type entier.
+Cet argument sera stocké dans la variable \inlinecode{n} (on donne pour cela un pointeur vers \inlinecode{n} en premier argument à la fonction).
+Il aura pour valeur par défaut $27$ (troisième argument de la fonction).
+Dans la ligne de commande, pour fixer une valeur à cet argument il faudra écrire \term{-setn=12} (on peut remplacer $12$ par n'importe quelle autre valeur).
+
+Enfin, la fonction \inlinecode{flag.Parse()} permet de prendre en compte toutes les lectures d'arguments qui ont été préparées avant (ici par \inlinecode{flag.IntVar}).
+
+\exercice{Récupérez le fichier \file{flag.go} sur \madoc{} et compilez-le avec \term{go build}. Essayez ensuite de l'exécuter de différentes façon (avec et sans argument, avec différents arguments).}
+
+\exercice{Testez votre programme avec l'argument \term{-h}, c'est-à-dire en faisant \term{./flag -h}. À quoi sert le quatrième argument de la fonction \inlinecode{flag.IntVar} ?}
+
+On peut bien sûr traiter d'autres types d'arguments que des entiers (avec les fonctions \inlinecode{flag.XxxVar} adéquates), plusieurs arguments à la fois (avec plusieurs fonctions \inlinecode{flag.XxxVar} avant le \inlinecode{flag.Parse}), etc.
+Toutes les informations sur la bilbiothèque sont disponibles dans la documentation\footnotemark.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/flag}}
+
+\exercice{Écrivez un programme qui prend en argument trois entiers $x$, $y$ et $z$ et stocke dans un tableau la table de multiplication de $x$ à partir de $0\times x$ jusqu'à $y\times x$ à part les valeurs qui sont multiples de $z$. Testez votre programme pour plusieurs valeurs de $x$, $y$ et $z$ (sans le recompiler). Si nécessaire, modifiez votre programme pour vous assurer que la taille de votre tableau est juste la bonne pour stocker vos valeurs. Vous devez être capable de justifier que c'est bien le cas. Testez-le. Si nécessaire, modifiez votre programme pour vous assurer qu'il n'y a jamais de copies de votre tableau qui sont réalisées au cours de son remplissage. À nouveau, vous devez être capable de justifier que c'est bien le cas. Testez-le.}
+
+\end{document}

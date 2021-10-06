@@ -1,0 +1,293 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fullpage}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[hyperfootnotes=false]{hyperref}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%\usepackage[fontsize=18pt]{scrextend}
+%\usepackage{setspace}
+%\onehalfspacing
+
+%boxes
+\newcounter{saveFootnote}
+\usepackage{fancybox}
+\newcommand{\important}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\doublebox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\remarque}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\fbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\exercice}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\shadowbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+
+%code
+\usepackage{listings}
+\usepackage{color}
+\usepackage{newfloat}
+\usepackage{caption}
+\DeclareFloatingEnvironment[fileext=frm,placement={htbp},name=Programme]{figprog}
+\captionsetup[figprog]{labelfont=bf}
+%% Golang definition for listings
+%% http://github.io/julienc91/lstlistings-golang
+\lstdefinelanguage{Golang}{
+  morekeywords=[1]{package,import,func,type,struct,return,defer,panic,recover,select,var,const,iota,},
+   morekeywords=[2]{string,uint,uint8,uint16,uint32,uint64,int,int8,int16,int32,int64,bool,float32,float64,complex64,complex128,byte,rune,uintptr, error,interface},
+   morekeywords=[3]{map,slice,make,new,nil,len,cap,copy,close,true,false,delete,append,real,imag,complex,chan,},
+   morekeywords=[4]{for,break,continue,range,go,goto,switch,case,fallthrough,if,
+     else,default,},
+   morekeywords=[5]{Println,Printf,Error,Print,Fatal,ReadFile,Open,NewScanner,Scan,Text,Err,Create,Close},
+   sensitive=true,
+   morecomment=[l]{//},
+   morecomment=[s]{/*}{*/},
+   morestring=[b]',
+   morestring=[b]",
+   morestring=[s]{`}{`}
+   }
+\lstset{
+    extendedchars=\true,
+    inputencoding=utf8,
+    literate=%
+            {é}{{\'{e}}}1
+            {è}{{\`{e}}}1
+            {ê}{{\^{e}}}1
+            {ë}{{\¨{e}}}1
+            {û}{{\^{u}}}1
+            {ù}{{\`{u}}}1
+            {â}{{\^{a}}}1
+            {à}{{\`{a}}}1
+            {î}{{\^{i}}}1
+            {ô}{{\^{o}}}1
+            {ç}{{\c{c}}}1
+            {Ç}{{\c{C}}}1
+            {É}{{\'{E}}}1
+            {Ê}{{\^{E}}}1
+            {À}{{\`{A}}}1
+            {Â}{{\^{A}}}1
+            {Î}{{\^{I}}}1,
+    frame=none,
+    xleftmargin=1cm,
+    basicstyle=\footnotesize,
+    keywordstyle=\bf\color{blue},
+    numbers=none,
+    numbersep=5pt,
+    showstringspaces=false,
+    stringstyle=\color{red},
+    tabsize=4,
+    language=Golang % this is it !
+}
+\newcommand{\sourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{10cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+\newcommand{\bigsourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{16cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+
+% macros générales
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\madoc}{\textsc{Madoc}}
+\newcommand{\term}[1]{\textsf{#1}}
+\newcommand{\inlinecode}[1]{\textsf{#1}}
+\newcommand{\goout}[1]{\textsf{#1}} % retours de go, erreurs, etc
+
+\title{Les bases du langage Go\\ Partie 3~: fichiers}
+\author{Initiation au développement}
+\date{BUT informatique, première année}
+
+\begin{document}
+
+\maketitle{}
+
+Ce TP a pour but de vous présenter les bases du langage Go.
+C'est ce langage qui sera utilisé pour réaliser tous les exercices de ce cours d'initiation au développement. Il n'y a pas de prérequis particuliers en dehors du contenu des TP précédents (les bases du langage Go partie 1 et partie 2).
+
+\important{Dans tout ce TP un texte avec cet encadrement est un texte contenant une information importante, il faut donc le lire avec attention et veiller à en tenir compte.}
+
+\remarque{Un texte avec cet encadrement est une remarque.}
+
+\exercice{Un texte avec cet encadrement est un travail que vous avez à faire.}
+
+\important{Même si la plupart des exercices de ce TP peuvent vous sembler très faciles, faites les tous sérieusement~: cela vous permettra de retenir la syntaxe du langage Go et d'être ainsi plus à l'aise lors des prochains TPs.}
+
+\remarque{Si vous souhaitez avoir un autre point de vue sur l'apprentissage du langage Go, vous pouvez consulter le tutoriel officiel \emph{A Tour of Go}\footnotemark{} ou le site \emph{Go by Example}\footnotemark{} en faisant toute fois attention au fait que ces sites sont plutôt faits pour les personnes ayant déjà une bonne expérience de la programmation.}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://tour.golang.org/}}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://gobyexample.com/}}
+
+\newpage{}
+
+\section{Écriture de fichiers}
+
+Il est pratique de savoir écrire des données dans des fichiers.
+Ceci peut permettre de sauvegarder l'état d'un programme entre plusieurs utilisations de celui-ci, ou encore d'enregistrer les données de sortie d'un programme pour ensuite les analyser à l'aide d'un autre programme.
+
+Nous allons ici nous concentrer sur la création d'un fichier dans lequel on écrira ensuite, mais il est bien sûr possible d'ouvrir un fichier déjà existant pour écrire dedans (soit après son contenu, soit en effaçant celui-ci, voir même au milieu du fichier).
+
+\subsection{Créer un fichier}
+
+Pour créer un fichier on peut utiliser la fonction \inlinecode{Create} du paquet \inlinecode{os}\footnotemark.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/os}}
+Il ne faut pas oublier, une fois qu'on a terminé d'utiliser le fichier, de le fermer avec la fonction \inlinecode{Close}.
+Le programme~\ref{prog:create} donne un exemple de création de fichier.
+
+\sourcecode{create.go}{Création d'un fichier en Go}{prog:create}
+
+La fonction \inlinecode{Create} prend en argument le nom du fichier à créer.
+Elle retourne le fichier lui-même (\inlinecode{myFile}) ainsi qu'une erreur (\inlinecode{err}).
+Celle-ci sert à indiquer si jamais il y a eu un soucis en créant le fichier.
+On doit donc toujours vérifier que ce n'est pas le cas (en vérifiant que l'erreur vaut \inlinecode{nil}) avant d'utiliser le fichier.
+
+La fonction \inlinecode{Close} retourne elle aussi une erreur, pour indiquer si le fichier a pu être fermé correctement ou pas.
+Par ailleurs, vous aurez peut-être noté que cette fonction ne s'utilise pas exactement comme les autres fonctions que vous avez vues jusqu'à présent~: on écrit \inlinecode{myFile.Close()} plutôt que \inlinecode{os.Close(myFile)}.
+On appelle ce genre de fonction une \emph{méthode} et vous verrez un peu plus tard comment en définir soit même et à quoi elles servent.
+
+On notera aussi l'utilisation du paquet \inlinecode{log}\footnotemark{} pour afficher des informations sur le déroulement du programme à l'écran (dans les TPs précédents on utilisait \inlinecode{fmt}).
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/log}}
+En particulier, la fonction \inlinecode{Fatal} de ce paquet permet de terminer le programme en plus d'afficher des informations à l'écran.
+
+\exercice{Récupérez le programme \file{create.go} sur \madoc{} et testez-le. Constatez que celui-ci crée effectivement des nouveaux fichiers. Que se passe-t-il si on demande de créer un fichier qui existe déjà ?}
+
+\subsection{Écrire dans un fichier nouvellement créé}
+
+Une fois notre fichier créé on peut écrire dedans avec la fonction \inlinecode{Fprintln} du paquet \inlinecode{fmt}.
+Cette fonction est similaire à \inlinecode{Println} que nous avons déjà vue, à part qu'elle écrit dans un fichier, qui doit être indiqué dans ses arguments.
+Le programme~\ref{prog:printfile} donne un exemple d'utilisation de cette fonction.
+
+\sourcecode{write.go}{Écriture dans un fichier en Go}{prog:printfile}
+
+Ce programme est similaire au programme~\ref{prog:create} à la différence qu'entre la création et la fermeture de fichier on utilise la fonction \inlinecode{Fprintln}.
+On peut noter que le fichier dans lequel écrire est donné en premier argument de la fonction.
+Par ailleurs, cette fonction peut retourner une erreur si l'écriture s'est mal passée (ici on la récupère dans \inlinecode{err} et on vérifie que tout va bien en la comparant à \inlinecode{nil}).
+Une autre valeur est retournée, qu'on ne récupère pas ici (on utilise le symbole \_ pour cela, car on ne souhaite pas utiliser cette valeur et, comme nous l'avons vu précédemment, toute variable créée en Go doit ensuite être utilisée).
+Cette valeur indique le nombre d'octets qui ont été écrits dans le fichier.
+
+\remarque{La fonction \inlinecode{Println} que nous avons utilisée auparavant retourne en fait elle aussi deux valeurs~: le nombre d'octets écrits et une erreur.}
+
+\exercice{Récupérez le programme \file{write.go} sur \madoc{} et exécutez-le. Essayez de modifier différents éléments de ce programme (nom du fichier, contenu des lignes écrites, nombre de lignes écrites) et testez à nouveau. Que se passe-t-il si on utilise ce programme avec un nom de fichier correspondant à un fichier déjà existant et contenant du texte ?}
+
+\exercice{Écrivez un programme qui prend en argument un entier \inlinecode{n} compris entre 0 et 10 (il faudra signaler si l'entier n'est pas correct) et écrit la table de multiplication de \inlinecode{n}, bien présentée, dans un fichier (de $0\times n$ à $10\times n$).}
+
+% TODO : il faut utiliser les bufio ici aussi… peut-être qu'il faut donc remettre l'écriture après la lecture (mais pas sur, l'écriture est plus visuelle)
+
+\section{Lecture de fichiers}
+
+Il aussi utile d'être capable de lire un fichier et de traiter son contenu.
+Ceci peut servir en particulier à configurer un logiciel~: on crée un fichier de configuration qui contient des informations sur nos préférences (langue, raccourcis, etc) et la première action du logiciel lorsqu'il démarre est de lire ce fichier pour prendre en compte ces préférences.
+Une autre utilisation courante est de stocker un ensemble de données sous forme d'un fichier (plus ou moins structuré~: csv, json, etc) pour pouvoir ensuite les traiter à l'aide d'un programme en lisant le fichier.
+
+\subsection{Lire tout un fichier d'un coup}
+
+La méthode la plus simple en Go pour récupérer le contenu d'un fichier est d'utiliser la fonction \inlinecode{ReadFile} du paquet \inlinecode{io/ioutil}\footnotemark{}.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/io/ioutil}}
+Cette fonction permet de lire l'intégralité d'un fichier (identifié par son chemin) et de stocker ceci dans un tableau d'octets (\inlinecode{[]byte}).
+Les raisons pour lesquelles on obtient un tableau d'octets plutôt que directement une chaîne de caractères sont en dehors du cadre de ce cours (mais vous en parlerez dans vos cours d'architecture et de système).
+Pour l'instant il vous suffit de vous souvenir qu'on peut transformer ce tableau d'octets \inlinecode{t} en chaîne de caractères simplement en écrivant \inlinecode{string(t)}.
+Le programme~\ref{prog:readfile} donne un exemple d'utilisation de cette fonction.
+
+\sourcecode{readfile.go}{Lecture d'un fichier en Go}{prog:readfile}
+
+Dans ce programme on remarque que la fonction \inlinecode{ReadFile} retourne deux valeurs~: le résultat de la lecture et une erreur.
+Avant de consulter le résultat de la lecture on doit toujours vérifier que l'erreur vaut \inlinecode{nil}, indiquant que tout s'est bien passé.
+
+\exercice{Récupérez le programme \file{readfile.go} sur \madoc{} et testez-le. Expliquez l'erreur que vous observez. Créez au bon endroit (pour qu'il n'y ait pas d'erreur) un fichier \emph{test} contenant quelques lignes de texte puis testez à nouveau votre programme.}
+
+Une fois le fichier lu et stocké sous forme de chaîne de caractères, on peut le traiter en utilisant des fonctions d'analyse des chaînes de caractères, comme celles du paquet \inlinecode{strings}\footnotemark{} par exemple.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/strings}}
+
+Pour des raisons de performances, il n'est pas toujours raisonnable de lire un fichier entier (et donc de le stocker en mémoire).
+Dans la suite de cette partie nous allons voir qu'il est possible de lire un fichier morceau par morceau.
+
+\subsection{Extraire des données d'un fichier}
+
+En utilisant le paquet \inlinecode{os} on a accès aux fonctions de bas niveau permettant de lire un fichier octet par octet (notamment la fonction \inlinecode{Read} du paquet \inlinecode{os}).
+Ces fonctions peuvent être un peu compliquées à manipuler (pour des raisons techniques, c'est parfois difficile de reconstituer une ligne de texte à partir de celles-ci) cependant on a aussi accès à des fonctions de plus haut niveau, construite à partir des fonctions du paquet \inlinecode{os}, permettant de lire plus simplement des fichiers.
+
+Le paquet \inlinecode{fmt}\footnotemark en particulier fournit quelques fonctions intéressantes.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/fmt}}
+Nous allons étudier en particulier la fonction \inlinecode{Fscanln} qui permet de lire une ligne d'un fichier et de stocker les différentes valeurs stockées sur cette lignes (séparées par des espaces) dans des variables.
+Le programme~\ref{prog:fscanln} montre un exemple d'utilisation de cette fonction.
+
+\sourcecode{fscanln.go}{Extraction de données d'un fichier en Go}{prog:fscanln}
+
+La première partie de ce programme consiste à ouvrir un fichier.
+Pour cela on utilise la fonction \inlinecode{Open} du paquet \inlinecode{os} en indiquant le chemin du fichier à ouvrir.
+Cette fonction retourne un fichier et une erreur.
+Comme pour \inlinecode{ReadFile} dans la partie précédente, il faut vérifier que l'erreur vaut \inlinecode{nil} avant d'utiliser le fichier.
+
+La deuxième partie du programme est la lecture à proprement parler.
+On commence par préparer une variable \inlinecode{nbLus} qui servira à indiquer combien de valeurs ont été lues avec succès ainsi que deux variables \inlinecode{unEntier} et \inlinecode{uneChaine} pour stocker les données qu'on souhaite extraire du fichier.
+On utilise ensuite la fonction \inlinecode{Fscanln} en lui donnant en arguments le fichier à lire (ici \inlinecode{myFile}) et les adresses des variables où stocker les données.
+Cette fonction peut retourner une erreur si les choses se sont mal passées, on doit vérifier que cette erreur est différente de \inlinecode{nil} avant d'utiliser les données récupérées.
+
+La troisième partie du programme ferme le fichier.
+
+\exercice{Pourquoi utilise-t-on les adresses des variables \inlinecode{unEntier} et \inlinecode{uneChaine} plutôt que directement les variables elles-mêmes ?}
+
+\exercice{Récupérez le programme \file{fscanln.go} sur \madoc{} et exécutez-le. Expliquez l'erreur que vous rencontrez. Créez ensuite un fichier \file{fichierScan} et testez à nouveau. Expliquez l'erreur que vous rencontrez. Ajoutez une ligne quelconque au fichier \file{fichierScan} et testez à nouveau. Expliquez l'erreur que vous rencontrez. Changez \file{fichierScan} pour qu'il ne contienne que des lignes avec un entier suivi d'un espace suivi d'une chaîne de caractères sans espaces. Testez à nouveau.}
+
+Après qu'une ligne ait été lue, la position actuelle dans le fichier est mise-à-jour dans la structure de données \inlinecode{myFile}.
+Le prochain appel à \inlinecode{Fscanln} lira donc la ligne suivante.
+
+\exercice{Modifiez le programme \file{fscanln.go} pour qu'il lise 5 lignes du fichier \file{fichierScan} à l'aide d'une boucle. Testez-le. Corrigez si nécessaire le contenu du fichier \file{fichierScan} pour que le programme ne produise plus d'erreur à la lecture de ce fichier. Testez à nouveau.}
+
+Lorsque la fonction \inlinecode{Fscanln} atteint la fin du fichier lu, elle retourne une erreur particulière (que vous avez peut être observée dans vos tests).
+Cette erreur s'appelle \inlinecode{EOF} et elle fait partie du paquet \inlinecode{io}.
+On peut donc y faire référence dans du code Go en écrivant \inlinecode{io.EOF}.
+
+\exercice{Modifiez le programme \file{fscanln.go} pour qu'il lise le fichier \file{fichierScan} jusqu'au bout, quelque soit sa taille. Vous pourrez utilisez pour cela une conditionnelle dans votre boucle, qui teste si l'erreur est égale à \inlinecode{io.EOF} et stoppe la boucle si c'est le cas.}
+
+\remarque{De la même façon que \inlinecode{Fprintln} correspond à \inlinecode{Println}, \inlinecode{Fscanln} correspond à une fonction \inlinecode{Scanln} qui permet de lire ce que l'utilisateur entre au clavier dans le terminal.}
+
+\subsection{Lire un fichier ligne par ligne}
+
+La fonction \inlinecode{Fscanln} n'est pas toujours la plus pratique à utiliser, en particulier car elle impose que les données soient séparées par des espaces.
+Nous allons maintenant voir un autre moyen de lire les données d'un fichier, en utilisant des fonctions du paquet \inlinecode{bufio}\footnotemark{}.
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/bufio}}
+
+\remarque{Les fonctions du paquet \inlinecode{bufio} sont des entrées/sorties \emph{bufferisées}, c'est-à-dire que lorsqu'on demande une lecture les données sont lues dans un espace mémoire (un tampon, \emph{buffer} en anglais) où elles ont été préalablement préchargées depuis le fichier. Quand l'espace est vide, des données sont rechargées dedans, jusqu'à le remplir. Ceci limite les accès aux fichiers, qui sont des opérations coûteuses pour un ordinateur.}
+
+Le programme~\ref{prog:bufio} montre comment préparer un fichier à être lu, puis comment lire quelques lignes de celui-ci.
+
+\sourcecode{bufio.go}{Lecture d'un fichier avec bufio en Go}{prog:bufio}
+
+La première partie de ce programme consiste à ouvrir un fichier, exactement comme nous l'avons vu avant.
+
+La deuxième partie du programme utilise la fonction \inlinecode{NewScanner} du paquet \inlinecode{bufio} pour construire un \emph{scanner} qui sera utilisé pour lire le fichier.
+
+La troisième partie utilise la méthode \inlinecode{Scan} pour lire, en boucle, le fichier ligne par ligne.
+À chaque tour de boucle on récupère la ligne de texte lue grâce à la méthode \inlinecode{Text}.
+La boucle s'arrête quand toutes les lignes ont été lues ou quand il y a un problème à la lecture~: dans ces deux cas la méthode \inlinecode{Scan} retourne \inlinecode{false}.
+
+Enfin, en utilisant la méthode \inlinecode{Err}, on vérifie que la lecture s'est bien passée et qu'on a bien atteint la fin du fichier.
+
+On peut noter que tout ceci fonctionne bien car \inlinecode{scanner} est un pointeur vers un \inlinecode{bufio.Scanner}, les méthodes et fonctions peuvent donc modifier son contenu (l'endroit où on est dans le fichier, le contenu de la dernière ligne lue, l'erreur).
+
+\exercice{Récupérez le programme \file{bufio.go} sur \madoc{} et testez-le.}
+
+\exercice{Modifiez le programme \file{bufio.go} pour compter le nombre de lignes du fichier et l'afficher. Testez votre code sur différents fichiers.}
+
+\exercice{Modifiez le programme \file{bufio.go} pour afficher uniquement les 5 premiers lignes du fichier. Testez votre code sur différents fichiers. En particulier, considérez le cas de fichiers qui contiennent moins de 5 lignes.}
+
+\subsection{Lire un fichier csv}
+
+En guise d'entraînement à l'utilisation des fonctions de lecture de fichier nous allons prendre un exemple.
+Vous trouverez sur \madoc{} un fichier \file{notes.csv}.
+Celui-ci contient sur chaque ligne des données (toutes les notes reçues par des étudiants au cours d'un semestre), séparées par des virgules~: un prénom, une note, un bonus, une note totale (qui est la somme de la note et du bonus).
+Une ligne représente donc une note reçue par un étudiant, il peut y avoir plusieurs lignes pour le même étudiant (s'il a reçu plusieurs notes).
+
+\exercice{Écrire un programme qui vérifie que chaque note totale est bien la somme de la note et du bonus dans le fichier \file{notes.csv} en affichant le numéro de chaque ligne où ce n'est pas le cas. Vous pourrez utiliser la fonction \inlinecode{Split} du paquet \inlinecode{strings} pour découper vos lignes à partir des virgules. Corriger (à la main) dans le fichier \file{notes.csv} les éventuelles erreurs que vous trouvez en modifiant la note totale (pas la note de base ni le bonus).}
+
+\exercice{Écrire un programme qui donne la liste de tous les étudiants ayant reçu au moins une note. Cette liste sera stockée dans un tableau.}
+
+\exercice{Écrire un programme qui calcule la moyenne (à partir des notes totales, intégrant les bonus) d'un étudiant dont le prénom est donné en argument du programme.}
+
+\remarque{Il existe aussi des bibliothèques permettant de lire et écrire simplement des fichiers structurés (json\footnotemark{}, csv\footnotemark{}, xml\footnotemark{} par exemple). Ces bibliothèques vont directement retranscrire les contenus des fichiers sous forme de structures de données et écrire les contenus de structures de données sous forme de fichiers.}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/encoding/json}}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/encoding/csv}}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/encoding/xml}}
+
+\end{document}

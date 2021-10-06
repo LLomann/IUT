@@ -1,0 +1,220 @@
+\documentclass{beamer}
+% Sans animations
+%\documentclass[handout]{beamer}
+
+\usepackage{tikz}
+\tikzstyle{every picture}+=[remember picture]
+
+\setbeamertemplate{footline}[frame number]
+
+\title{ALG1 : qu'est-ce qu'un algorithme ?}
+\author{}
+\date{loig.jezequel@univ-nantes.fr}
+
+\begin{document}
+
+\frame{
+\maketitle
+}
+
+\frame{
+\frametitle{Définitions informelles}
+
+\vfill
+
+\begin{block}{Algorithme \hfill source~: Cormen et al.}
+Procédure de calcul bien définie qui prend en entrée un ensemble de valeurs et qui donne en sortie un ensemble de valeurs.
+\end{block}
+
+\vfill
+
+\begin{block}{Algorithme \hfill source~: Cormen et al.}
+Séquence d'étapes de calcul qui transforment une entrée en sortie.
+\end{block}
+
+\vfill
+
+\begin{block}{Algorithme \hfill source~: Académie française}
+Méthode de calcul qui indique la démarche à suivre pour résoudre une série de problèmes équivalents en appliquant dans un ordre précis une suite finie de règles.
+\end{block}
+
+\vfill
+
+}
+
+\frame{
+\frametitle{Un exemple d'algorithme~: l'addition}
+
+\vfill
+
+\begin{block}{Problème}
+Étant donnés \tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red] (xy) {$x$ et $y$};} deux nombres entiers positifs exprimés en base 10, calculer la valeur de la somme \tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red] (xpy) {$x+y$};}.
+\end{block}
+
+\vfill
+
+\begin{block}{Principe de l'algorithme}
+Additionner les chiffres deux à deux, de droite à gauche, en propageant les éventuelles retenues.
+\end{block}
+
+\vfill
+
+\begin{exampleblock}{Une instance du problème~: $x=234$ et $y=56$}
+  \begin{center}
+    \begin{tabular}{cccc}
+        &$2$ & $\uncover<2->{^1}3$ & $\ 4$ \\
+    $+$ &    & $\ 5$ & $\ 6$ \\
+    \hline
+        & \uncover<4>{$2$} & \uncover<3->{$\ 9$} & \uncover<2->{$\ 0$} \\
+    \end{tabular}
+  \end{center}
+\end{exampleblock}
+
+\vfill
+
+\begin{tikzpicture}[overlay]
+  \node[above right of=xy, red] (entree) {entrée};
+  \path[-, red] (entree) edge (xy);
+  \node[below right of=xpy, red] (sortie) {sortie};
+  \path[-, red] (sortie) edge (xpy);
+\end{tikzpicture}
+}
+
+\frame{
+\frametitle{Un exemple d'algorithme~: l'addition, suite}
+
+\vfill
+
+\begin{block}{Notations}
+  On note $x = x_nx_{n-1}\dots x_1x_0$ et $y = y_my_{m-1}\dots y_1y_0$ et on suppose (sans perte de généralité) que $n\geq m$.
+\end{block}
+
+\vfill
+
+\begin{block}{Algorithme}
+Soit \tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red] (var1) {$i = 0$};} et soit \tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red] (var2) {$r_0 = 0$};}.\\
+\tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red, text width=10cm] (boucle1) {Tant que $i \leq m$ poser $z_i = (x_i + y_i + r_i)_0$ et $r_{i+1}= (x_i + y_i + r_i)_1$ puis augmenter $i$ de $1$.};}\\
+\tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red, text width=10cm] (boucle2) {Tant que $i \leq n$ poser $z_i = (x_i + r_i)_0$ et $r_{i+1} = (x_i + r_i)_1$ puis augmenter $i$ de $1$.};}\\
+\tikz[baseline]{\node[fill=red!20, anchor=base, rounded corners=5, draw=red, text width=10cm] (cond) {Si $r_{n+1} = 0$, retourner le nombre $z_nz_{n-1}\dots z_1z_0$ et sinon (si $r_{n+1} > 0)$, retourner le nombre $r_{n+1}z_nz_{n-1}\dots z_1z_0$.};}
+\end{block}
+
+\vfill
+
+\begin{tikzpicture}[overlay]
+  \node[above of=var2, red] (vars) {variables};
+  \path[-, red] (vars) edge (var1);
+  \path[-, red] (vars) edge (var2);
+  \node[above right of=boucle1, red, xshift=150, yshift=10] (boucles) {boucles};
+  \path[-, red] (boucles) edge (boucle1.east);
+  \path[-, red] (boucles) edge (boucle2.east);
+  \node[below right of=cond, red, yshift=-15] (condi) {conditionnelle};
+  \path[-, red] (condi) edge (cond);
+\end{tikzpicture}
+}
+
+\frame{
+\frametitle{Un exemple d'algorithme : le PGCD}
+
+\vfill
+
+\begin{block}{Problème}
+Étant donnés deux entiers positifs $a$ et $b$, calculer le plus grand diviseur commun de $a$ et $b$.
+\end{block}
+
+\vfill
+
+\begin{block}{Algorithme}
+Tant que $b \neq 0$, poser $b = a \mod b$ et $a = b$.
+Retourner $a$.
+\end{block}
+
+\vfill
+
+\begin{exampleblock}{Une instance du problème~: $a=594$ et $b=459$}
+\begin{enumerate}
+\item<2-> $b = 594 \mod 459 = 135$, $a = 459$
+\item<3-> $b = 459 \mod 135 = 54$, $a = 135$
+\item<4-> $b = 135 \mod 54 = 27$, $a = 54$
+\item<5-> $b = 54 \mod 27 = 0$, $a = 27$
+\item<6> $b = 0$, on retourne $27$
+\end{enumerate}
+\end{exampleblock}
+
+\vfill
+}
+
+\frame{
+\frametitle{Quelques exemples de problèmes d'algorithmique}
+
+\begin{block}{Biologie}
+Beaucoup de problèmes autour de l'ADN et notamment le problème d'\alert{alignement de séquences} ADN.
+\end{block}
+
+\begin{block}{Internet}
+Problèmes de \alert{routage}, de \alert{recherche et classement de données}, de \alert{compression}.
+\end{block}
+
+\begin{block}{Industrie}
+Problèmes de \alert{logistique} et \alert{planification} avec \alert{optimisation des ressources}.
+\end{block}
+
+\begin{block}{Remarque}
+Les algorithmes pour résoudre ces problèmes sont trop complexes pour les traiter dans ce cours, mais les techniques qu'on abordera sont à la base de ces algorithmes.
+\end{block}
+
+}
+
+\frame{
+\frametitle{Pourquoi étudier l'algorithmique ?}
+
+\vfill
+
+\begin{block}{Évolution des performances des ordinateurs}
+Tous les deux ans environ le nombre de transistors dans les micro-processeurs -- et donc la puissance de calcul -- double (loi de Moore), la mémoire augmente aussi rapidement.
+\end{block}
+
+\vfill
+
+\begin{block}{Mais…}
+  \begin{itemize}
+    \item exécuter un algorithme a quand même toujours un coût en \alert{énergie} et en \alert{temps},
+    \item et certains problèmes sont intrinsèquement trop complexes pour être résolus par force brute.
+  \end{itemize}
+  Donc savoir concevoir des algorithmes performants est important.
+\end{block}
+
+\vfill
+
+}
+
+\frame{
+\frametitle{Algorithmes performants~: un exemple\footnote{Cormen et. al, les tris seront abordés lors d'un prochain cours}}
+
+\begin{exampleblock}{Cas A}
+Rangement de $n$ éléments par tri par insertion bien programmé~: $2n^2$ opérations, sur un ordinateur puissant~: 1 milliard d'opérations par seconde.
+\end{exampleblock}
+
+\begin{exampleblock}{Cas B}
+Rangement de $n$ éléments par tri fusion mal programmé~: $50n\log_2(n)$ opérations, sur un ordinateur peu puissant~: 10 millions d'opérations par seconde.
+\end{exampleblock}
+
+\begin{exampleblock}{Si $n=10^6$}
+Dans le cas A l'exécution nécessite $2.(10^6)^2$ opérations et dure donc $2.(10^6)^2/10^9=2000$ secondes alors que dans le cas B l'exécution nécessite $50.10^6.\log_2(10^6)$ opérations et dure donc $50.10^6.\log_2(10^6)/10^7=100$ secondes.
+\end{exampleblock}
+
+}
+
+\frame{
+\frametitle{Pourquoi étudier l'algorithmique ? suite et fin}
+
+\begin{block}{Même avec une puissance de calcul et une mémoire infinies}
+\begin{description}
+\item[Terminaison] Un algorithme mal conçu peut boucler sans arrêt, et donc ne jamais donner de réponses.
+\item[Validité] Un algorithme mal conçu peut donner des réponses incorrectes.
+\item[Implantation] Un algorithme mal compris peut être mal codé, le code exécuté par l'ordinateur ne correspondra alors pas à ce qui est attendu (terminaison et validité ne sont plus assurées).
+\end{description}
+\end{block}
+
+}
+
+\end{document}

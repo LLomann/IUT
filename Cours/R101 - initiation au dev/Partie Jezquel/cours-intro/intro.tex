@@ -1,0 +1,139 @@
+\documentclass{beamer}
+% Sans animations
+%\documentclass[handout]{beamer}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{pgfplots}
+\tikzstyle{every picture}+=[remember picture]
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+}
+
+
+\setbeamertemplate{footline}[frame number]
+
+\title{Introduction au développement}
+\author{Présentation du cours}
+\date{loig.jezequel@univ-nantes.fr}
+
+\begin{document}
+
+\frame{
+\maketitle
+}
+
+\frame{
+\frametitle{Au programme}
+
+\begin{block}{Algorithmique}
+Algorithmes fondamentaux (recherche, parcours, tri, etc).
+\end{block}
+
+\begin{block}{Structures de données}
+Listes, tableaux, piles, files, structures, etc.
+\end{block}
+
+\begin{block}{Méthodologie de développement}
+Documentation, tests, gestion de versions.
+\end{block}
+}
+
+\frame{
+\frametitle{Organisation du cours}
+
+\begin{block}{Cours magistraux (promo)}
+11 séances, en amphi, principalement algorithmique et structures de données.
+\end{block}
+
+\begin{block}{Travaux dirigés (groupes de TD)}
+32 séances, en salle machine, apprentissage d'un langage de programmation (Go) et mise-en-œuvre des concepts vus en CM.
+\end{block}
+
+\begin{block}{Travaux pratiques (groupes de TP)}
+32 séances, en salle machine, conception et implantation de programmes pour résoudre des problèmes variés.
+\end{block}
+}
+
+\frame{
+\frametitle{Évaluation}
+
+\begin{block}{Au fil du semestre}
+Plusieurs tests sur machine, exercices du même style que pendant les séances de TP.
+\end{block}
+
+\begin{block}{À la fin du cours}
+Projet de développement.
+\end{block}
+
+}
+
+\frame{
+\frametitle{Équipe enseignante}
+
+\begin{block}{Équipe}
+\begin{itemize}
+  \item Jean-François Berdjugin (TD, TP)
+  \item Nassim Hadj-Rabia (TD, TP)
+  \item Loïg Jezequel (CM, TD, TP)
+  \item Dalila Tamzalit (TD, TP)
+\end{itemize}
+\end{block}
+
+\begin{alertblock}{Important}
+N'hésitez pas à me contacter ou à contacter votre enseignant de TD/TP si vous avez la moindre question ou le moindre soucis.
+\end{alertblock}
+}
+
+\frame{
+\frametitle{Le langage Go}
+
+\begin{itemize}
+\item Impératif
+\item Concurrent
+\item Typé statiquement
+\item Simple
+\item Rapide à compiler
+\item Sous licence libre
+\item Développé par Google
+\end{itemize}
+
+}
+
+\frame{
+\frametitle{Références}
+\begin{itemize}
+  \item Introduction à l'algorithmique. Cormen, Leiserson, Rivest.
+  \item Cours et exercices corrigés d'algorithmique. Julland.
+  \item Conception d'algorithmes. Bosc, Guyomard, Miclet.
+  \item Et plein d'autres, \alert{disponibles au CDI}.
+\end{itemize}
+
+}
+
+\frame{
+\frametitle{Pratiquez !}
+
+\begin{block}{Exercices de TP}
+\begin{itemize}
+\item Faites-en le plus possible
+\item Codez une solution rapidement, même peu efficace
+\item Revenez sur vos solutions après coup pour les améliorer
+\end{itemize}
+\end{block}
+
+\begin{block}{Pratique personnelle}
+\begin{itemize}
+\item Codez souvent, pour vos propres projets par exemple
+\item Prenez d'autres points de vus que le mien (tutos, livres)
+\item On trouve de très bonnes collections d'exercices en ligne, comme par exemple le site \alert{Project Euler}\footnote{https://projecteuler.net/}
+\end{itemize}
+\end{block}
+
+}
+
+\end{document}

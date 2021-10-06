@@ -1,0 +1,190 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fullpage}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[hyperfootnotes=false]{hyperref}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+%\usepackage[fontsize=18pt]{scrextend}
+%\usepackage{setspace}
+%\onehalfspacing
+
+%boxes
+\newcounter{saveFootnote}
+\usepackage{fancybox}
+\newcommand{\important}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\doublebox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\remarque}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\fbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+\newcommand{\exercice}[1]{\setcounter{saveFootnote}{\value{footnote}}\vspace{0.3cm}\shadowbox{\begin{minipage}{14.5cm}#1\end{minipage}}\vspace{0.3cm}}
+
+%code
+\usepackage{listings}
+\usepackage{color}
+\usepackage{newfloat}
+\usepackage{caption}
+\DeclareFloatingEnvironment[fileext=frm,placement={htbp},name=Programme]{figprog}
+\captionsetup[figprog]{labelfont=bf}
+%% Golang definition for listings
+%% http://github.io/julienc91/lstlistings-golang
+\lstdefinelanguage{Golang}{
+  morekeywords=[1]{package,import,func,type,struct,return,defer,panic,recover,select,var,const,iota,},
+   morekeywords=[2]{string,uint,uint8,uint16,uint32,uint64,int,int8,int16,int32,int64,bool,float32,float64,complex64,complex128,byte,rune,uintptr, error,interface},
+   morekeywords=[3]{map,slice,make,new,nil,len,cap,copy,close,true,false,delete,append,real,imag,complex,chan,},
+   morekeywords=[4]{for,break,continue,range,go,goto,switch,case,fallthrough,if,
+     else,default,},
+   morekeywords=[5]{Println,Printf,Error,Print,Fatal,ReadFile,Open,NewScanner,Scan,Text,Err,Create,Close},
+   sensitive=true,
+   morecomment=[l]{//},
+   morecomment=[s]{/*}{*/},
+   morestring=[b]',
+   morestring=[b]",
+   morestring=[s]{`}{`}
+   }
+\lstset{
+    extendedchars=\true,
+    inputencoding=utf8,
+    literate=%
+            {é}{{\'{e}}}1
+            {è}{{\`{e}}}1
+            {ê}{{\^{e}}}1
+            {ë}{{\¨{e}}}1
+            {û}{{\^{u}}}1
+            {ù}{{\`{u}}}1
+            {â}{{\^{a}}}1
+            {à}{{\`{a}}}1
+            {î}{{\^{i}}}1
+            {ô}{{\^{o}}}1
+            {ç}{{\c{c}}}1
+            {Ç}{{\c{C}}}1
+            {É}{{\'{E}}}1
+            {Ê}{{\^{E}}}1
+            {À}{{\`{A}}}1
+            {Â}{{\^{A}}}1
+            {Î}{{\^{I}}}1,
+    frame=none,
+    xleftmargin=1cm,
+    basicstyle=\footnotesize,
+    keywordstyle=\bf\color{blue},
+    numbers=none,
+    numbersep=5pt,
+    showstringspaces=false,
+    stringstyle=\color{red},
+    tabsize=4,
+    language=Golang % this is it !
+}
+\newcommand{\sourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{10cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+\newcommand{\bigsourcecode}[3]{\begin{figprog}\begin{center}\begin{minipage}{16cm}\par\noindent\rule{\textwidth}{0.4pt}\lstinputlisting{src/#1}\par\noindent\rule{\textwidth}{0.4pt}\end{minipage}\end{center}\caption{#1}\label{#3}\end{figprog}}
+
+% macros générales
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\madoc}{\textsc{Madoc}}
+\newcommand{\term}[1]{\textsf{\underline{#1}}}
+\newcommand{\inlinecode}[1]{\textsf{#1}}
+\newcommand{\goout}[1]{\textsf{#1}} % retours de go, erreurs, etc
+
+\title{TD 1~: recherche d'éléments, implantation}
+\author{Initiation au développement}
+\date{BUT informatique, première année}
+
+\begin{document}
+
+\maketitle{}
+
+Ce TD vise à mettre en œuvre les concepts vus dans le cours \emph{ALG2~: recherche d'éléments}.
+Pour cela nous allons créer un module et l'utiliser pour développer une bibliothèque de fonctions Go permettant de chercher des éléments dans des tableaux.
+Nous mettrons en place des jeux de tests pour chacune de nos fonctions et nous évaluerons leurs performances.
+
+\important{Un texte avec cet encadrement contient une information importante.}
+
+\remarque{Un texte avec cet encadrement est une remarque.}
+
+\exercice{Un texte avec cet encadrement est un travail que vous avez à faire.}
+
+\section{Organisation de la bibliothèque}
+
+Nous allons coder nos fonctions au sein d'une bibliothèque qui aura vocation à s'étendre au fil du semestre~: elle contiendra à la fin l'implantation de tous les algorithmes vus en CM.
+Cette bibliothèque prendra la forme d'un module contenant plusieurs paquets (un pour chaque algorithme ou groupe d'algorithmes similaires).
+
+\remarque{À partir de maintenant, lorsque vous faites des exercices en TP vous avez le droit d'utiliser les fonctions de votre bibliothèque pour vous aider. Vous pouvez aussi enrichir votre bibliothèque avec des fonctions utilitaires développées pour un exercice, afin de les réutiliser pour en faire d'autres.}
+
+Le nom de votre module et ceux de vos paquets doivent donc avoir du sens, indiquer ce qu'on trouve dans votre bibliothèque et les différentes fonctionnalités qu'elle fournit.
+
+\exercice{Choisissez un nom pour votre module puis initialisez-le.}
+
+Dans ce premier TD nous allons implanter quatre fonctionnalités~:
+\begin{itemize}
+  \item la recherche d'éléments dans un tableau d'entiers,
+  \item la recherche de minimum dans un tableau d'entier,
+  \item la sélection d'éléments dans un tableau d'entiers,
+  \item la recherche d'éléments par dichotomie dans un tableau trié d'entiers.
+\end{itemize}
+Plusieurs organisations de ces fonctionnalités en paquets sont imaginables, il va vous falloir en choisir une.
+
+\exercice{Proposez et justifiez une organisations en paquets des quatre fonctionnalités ci-dessus. Créez les dossiers pour recevoir ces paquets.}
+
+\section{Implantation et test d'une fonctionnalité}
+
+\important{Ce travail est à faire pour chacune des quatre fonctionnalités à implanter~: recherche d'éléments, recherche de minimum, sélection d'éléments, recherche d'éléments par dichotomie.}
+
+Le développement d'une fonctionnalité se fait par des aller-retours réguliers entre la définition de tests et le codage de la fonctionnalité~: les tests peuvent nous indiquer des erreurs dans le codage, la réflexion sur le codage peut nous suggérer de nouveaux tests à réaliser.
+
+\subsection{Phase de réflexion}
+
+Avant de se lancer dans le codage, il est important d'avoir une phase de réflexion~: bien définir les entrées et sorties de notre (ou de nos) fonction(s) et réfléchir aux premiers tests nécessaires.
+
+\remarque{Parfois, parmi les sorties d'une fonction, on peut avoir besoin de retourner une erreur (par exemple si les entrées ne sont pas exploitables~: tableau qui vaut \inlinecode{nil}, indice négatif dans un tableau, etc). Pour cela, on peut utiliser la fonction \inlinecode{New} du paquet \inlinecode{errors}\footnotemark{} (avec un s) et définir une variable de type \inlinecode{error} (sans s).}
+\stepcounter{saveFootnote}
+\footnotetext[\value{saveFootnote}]{\url{https://pkg.go.dev/errors}}
+
+\exercice{Définissez les paramètres et les valeurs de retour de la fonction qui implantera la fonctionnalité que vous développez. En particulier, demandez-vous s'il faut pouvoir retourner une erreur ou si on pourra toujours retourner une valeur correcte quelles que soient les paramètres de la fonction ?}
+
+\exercice{Définissez un premier jeu de tests pour votre fonction. Demandez-vous pour cela quelles sont les valeurs limites à tester (tableau vide, élément absent ou présent, etc).}
+
+\subsection{Codage et test}
+
+Une fois la phase de réflexion préliminaire réalisée, on peut commencer à coder nos fonctions.
+Puis les tester avec notre jeu de tests.
+
+\remarque{Si nos fonctions sont un peu complexes (plus de 5 à 10 lignes de codes) il est important de faire des petits tests au fur et à mesure de leur développement.
+On ne parle pas ici de définir un jeu de tests, mais d'essayer les fonctions sur des valeurs simples et de faire des affichages à des passages clés du code pour bien s'assurer que ce qui se passe est ce qu'on avait prévu.
+Pour cela vous pouvez éventuellement créer un \inlinecode{main} à la racine de votre module et l'utiliser pour appeler vos fonctions.}
+
+\exercice{Codez votre fonctionnalité puis, une fois que vous pensez avoir terminé, testez-là avec votre jeu de tests. Si vous vous rendez compte en codant que vous avez oublié des tests importants, ajoutez-les à votre jeu de tests immédiatement.}
+
+\subsection{Couverture}
+
+Comme nous l'avons vu en cours, ce n'est pas parce que notre fonctionnalité passe tous nos tests qu'elle est correcte.
+On peut oublier des tests importants.
+Les fonctionnalités de la commande \term{go test} permettent de détecter automatiquement une partie de ces oublis en évaluant la couverture du code, c'est-à-dire en indiquant les parties du codes (fonctions, branches de conditionnelles) qui ne sont utilisées par aucun test.
+Un code non couvert par les tests peut être inutile à la fonctionnalité (et dans ce cas il faut le supprimer) ou bien il doit être testé (et dans ce cas il faut ajouter des tests dans le jeu de tests).
+
+\paragraph{Calculer la couverture.}
+Pour calculer la couverture d'un jeu de tests il suffit d'utiliser la commande \term{go test} avec l'option \term{-cover}, c'est-à-dire de faire \term{go test -cover}.
+On voit alors un pourcentage s'afficher à l'écran, qui indique la proportion de notre code qui est couvert par les tests.
+
+\exercice{Calculez la couverture de votre code par vos tests.}
+
+\paragraph{Visualiser la couverture.}
+Si le code n'est pas complètement couvert par les tests, il peut être intéressant de savoir quelle partie de celui-ci n'est jamais utilisée.
+Ceci peut se faire en utilisant la commande \term{go test -coverprofile=couverture.out}, qui crée un fichier \file{couverture.out} contenant des informations sur le code non couvert.
+
+On peut directement lire ce fichier, mais ce n'est pas toujours pratique, surtout pour des codes un peu longs.
+Une autre solution consiste à utiliser ensuite la commande \term{go tool cover -html=couverture.out} qui va permettre de visualiser dans un navigateur internet la couverture du code.
+
+\exercice{Si nécessaire, visualisez la couverture de votre code par vos tests. Déterminez alors si le code non couvert est utile ou non et ajoutez si besoin des cas de test pour le couvrir.}
+
+\section{Évaluation de performances}
+
+Nous avons vu en cours que la recherche dans un tableau trié est plus efficace en général par dichotomie (1) que si on la fait linéairement (2).
+On peut, aussi, dans le cas d'un tableau trié, améliorer un peu la recherche linéaire en s'arrêtant dès qu'on trouve une valeurs supérieure à la valeur cherchée (3).
+L'objectif de cette dernière partie du TD est de confirmer expérimentalement que (1) et (3) sont plus efficaces que (2) et de trouver si (1) est plus ou moins efficace que (3).
+
+\exercice{Vous avez normalement codé la méthode (1) et la méthode (2). Codez maintenant la méthode (3) (il s'agit de faire une petite adaptation de la méthode (2)) en choisissant judicieusement le paquet dans lequel la placer.}
+
+\exercice{Concevez et ajoutez des benchmarks à vos jeux de tests pour pouvoir comparer les trois méthodes. Testez puis concluez.}
+
+
+
+\end{document}

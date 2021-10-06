@@ -1,0 +1,124 @@
+\documentclass{beamer}
+% Sans animations
+%\documentclass[handout]{beamer}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\tikzstyle{every picture}+=[remember picture]
+
+\setbeamertemplate{footline}[frame number]
+
+\title{DEV2 : tester automatiquement ses programmes}
+\author{}
+\date{loig.jezequel@univ-nantes.fr}
+
+\begin{document}
+
+\frame{
+\maketitle
+}
+
+\frame{
+\frametitle{Objectifs du cours}
+
+  \begin{block}{Tester ses programmes}
+    Quand on programme, on doit \alert{tester régulièrement} son code, idéalement à chaque modification de celui-ci. Ça peut être laborieux.
+  \end{block}
+
+  \begin{block}{Automatiser les tests}
+    Pour ne pas avoir à sans cesse refaire des tests à la main on peut écrire et mettre à jour un \alert{jeu de tests} qui pourra être \alert{automatiquement utilisé} sur notre programme.
+  \end{block}
+
+  \begin{block}{Évaluer l'efficacité du code}
+    Un jeu de test permettra aussi de \alert{mesurer le temps de calcul} de notre code sur un large ensemble de cas, ce qui permet d'évaluer son efficacité.
+  \end{block}
+
+}
+
+\frame{
+\frametitle{Automatisation des tests en Go}
+
+\begin{block}{La base pour tester les paquets d'un module}
+  \begin{itemize}
+    \item La commande \emph{go test}
+    \item Le paquet \emph{testing}
+  \end{itemize}
+\end{block}
+
+\begin{block}{La commande \emph{go test}}
+  \begin{itemize}
+    \item Lit les fichiers se terminant par \_test.go du dossier courant,
+    \item appelle une à une toutes les fonctions de test dans ces fichiers,
+    \item affiche le résultat de ces tests (réussi ou non).
+  \end{itemize}
+\end{block}
+
+\begin{block}{Fonction de test}
+  \begin{itemize}
+    \item Son nom commence par Test,
+    \item a un unique argument t de type *testing.T,
+    \item appelle la fonction t.Fail() quand un test est raté.
+  \end{itemize}
+\end{block}
+
+}
+
+\frame{
+\frametitle{Évaluation de l'efficacité du code}
+
+\begin{block}{La base pour évaluer l'efficacité des paquets d'un module}
+  \begin{itemize}
+    \item La commande \emph{go test -bench=.}
+    \item Le paquet \emph{testing}
+  \end{itemize}
+\end{block}
+
+\begin{block}{La commande \emph{go test -bench=.}}
+  \begin{itemize}
+    \item Lit les fichiers se terminant par \_test.go du dossier courant,
+    \item appelle toutes les fonctions de benchmarking dans ces fichiers,
+    \item affiche le résultat de ces évaluations.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Fonction de benchmarking}
+  \begin{itemize}
+    \item Son nom commence par Benchmark,
+    \item a un unique argument b de type *testing.B,
+    \item doit utiliser b.N fois le code à évaluer.
+  \end{itemize}
+\end{block}
+}
+
+\frame{
+\frametitle{Quelques précisions sur \emph{go test}}
+
+\begin{block}{Paquets à tester}
+  On peut les préciser en listant leurs noms longs à la suite de la commande.
+  Sinon, la commande travaille uniquement sur le dossier courant.
+\end{block}
+
+\begin{block}{Tests et benchmarks}
+  Par défaut, quand on fait l'évaluation de l'efficacité du code (\emph{go test -bench=.}) cela exécute aussi les tests.
+  Pour juste faire l'évaluation on peut préciser la commande~:\\
+  \begin{center}\emph{go test -run=Bench -bench=.}\end{center}
+\end{block}
+
+\begin{block}{-run= et -bench=}
+Ces arguments permettent en fait de filtrer les tests à réaliser (run) et les benchmarks à réaliser (bench), on peut mettre n'importe quelle expression rationnelle après le =
+\end{block}
+
+}
+
+\frame{
+\frametitle{Quelques ressources}
+
+\begin{itemize}
+  \item Infos sur la commande \emph{go test}~: \emph{go help test}
+  \item Documentation du paquet testing~: \url{https://pkg.go.dev/testing}
+\end{itemize}
+
+}
+
+
+\end{document}
