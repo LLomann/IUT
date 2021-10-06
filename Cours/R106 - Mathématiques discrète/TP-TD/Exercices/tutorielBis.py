@@ -121,6 +121,9 @@ def moyenne(E):
         compte = compte+1
     return somme/compte
 
+def moyenne_corige(E):
+    return somme(E)/ taille(E)
+
 #teste
 #print(moyenne({10,14,16,20}))
 
@@ -153,3 +156,23 @@ def suppr_doublon(l) :
                        
 print(suppr_doublon(liste))
 
+# Exercice 6
+#1.a)
+
+def inclus(a,b):
+
+    for i in a :
+        err = False
+        for j in b :
+            if i == j :
+                print ("la valeur", i,"est inclus dans lautre liste")
+                err = True
+                break
+
+        if err == False:
+            print ("la valeur", i,"n'est pas inclus dans lautre liste")
+            return False
+                
+    return True
+      
+print(inclus([1,3,9,5],[1,5,9,7,3]))
