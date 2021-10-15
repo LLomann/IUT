@@ -84,8 +84,7 @@ def membre(x,E):
     for i in E:
         if i == x:
             return True
-    else:
-        return False
+    return False
     
 #teste
 #print(membre(8, {1,2,5,3,6,7,8,4}))
@@ -139,7 +138,8 @@ def est_ensemble(l) :
     return True
 
 liste = [1,2,3,2,4,8,9,7]
-print(est_ensemble(liste))
+#test
+#print(est_ensemble(liste))
 		
 #b)
 def suppr_doublon(l) :
@@ -153,8 +153,9 @@ def suppr_doublon(l) :
         if not double : 
             tab.append(l[i])         
     return tab        
-                       
-print(suppr_doublon(liste))
+
+#test                  
+#print(suppr_doublon(liste))
 
 # Exercice 6
 #1.a)
@@ -162,17 +163,89 @@ print(suppr_doublon(liste))
 def inclus(a,b):
 
     for i in a :
-        err = False
-        for j in b :
-            if i == j :
-                print ("la valeur", i,"est inclus dans lautre liste")
-                err = True
-                break
-
-        if err == False:
-            print ("la valeur", i,"n'est pas inclus dans lautre liste")
+        if not membre(i,b):
             return False
-                
     return True
-      
-print(inclus([1,3,9,5],[1,5,9,7,3]))
+
+  
+#test   
+#print(inclus([1,3,9,7],[1,5,9,7,3]))
+#print(inclus([1,3,9,47],[1,5,9,7,3]))
+
+#1.b)
+def egale(a,b):
+
+    if inclus(a,b) and inclus(b,a):
+        return True
+    return False
+
+#test
+#print(egale([1,3,9,6],[1,5,9,7,3]))
+#print(egale([1,3,9,7],[1,5,9,7,3]))
+#print(egale([7,5,9,1],[1,9,5,7]))
+
+#1.c)
+def disjoint(a,b):
+
+    for i in a :
+        if membre(i,b):
+            return False
+    return True  
+
+#test
+#print(disjoint({1,2,3,4},{4,5,6,7}))
+#print(disjoint({1,2,3,4},{5,6,7}))
+
+#2.a)
+def ajout(x,E):
+
+    z = set()
+    for i in E:
+        z.add(i)
+    z.add(x)
+    return z
+
+#test
+#print(ajout(4,{1,2,3}))
+
+#2.b)
+def union(a,b):
+    for i in b:
+        a.add(i)
+    return a
+
+#test
+#print(union({4,5,6,7},{1,2,3}))
+
+#2.c)
+def intersection(a,b):
+
+    z = set()
+
+    for i in b:
+        for j in a:
+            if i == j:
+                z.add(j)
+    if z == set():
+        return print("l'intersection est vide")
+
+    return z
+                
+#test
+#print(intersection({1,2,3,4,5}, {6,7,8,9}))
+#print(intersection({1,2,3,4,5}, {6,1,8,5}))
+
+#2.d)
+
+def retire(x,E):
+
+    z = set()
+
+    for i in E:
+        if i != x:
+            z.add(i)
+
+    if        
+    return z
+
+print(retire(5,{1,2,3,4,5,6}))
