@@ -19,25 +19,29 @@ maxoccurrences([]int{1, 2, 3, 4, 3}) = 3, 2
 func maxoccurrences(t []int) (n int, occ int) {
 
 	if t == nil {
-		return 69,0
+		return 69, 0
 	}
 
-	var compteur int
-	var ancien_compteur int
-	for i:=0; i<len(t); i ++ {
-		for j:= i+1;j<len(t); j ++ {
-			if t[i] == t[j]{
-				compteur ++
+	if occ == 1 {
+		return 69, 1
+	}
+
+	var compteur int = 1
+
+	for i := 0; i < len(t); i++ {
+
+		for j := i + 1; j < len(t); j++ {
+			if t[i] == t[j] {
+				compteur++
 			}
 		}
-	
-	if ancien_compteur > compteur {
-		ancien_compteur = compteur
-		n = t[i]
-		occ = compteur
+
+		if compteur > occ {
+			n = t[i]
+			occ = compteur
+		}
+		compteur = 1
 	}
-	compteur = 0	
-	} 
 
 	return n, occ
 }
