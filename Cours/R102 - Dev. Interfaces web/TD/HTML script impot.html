@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<script language="javascript"><!--
+    accepteCookies = (navigator.cookieEnabled) ? true : false;
+    if (! accepteCookies) {
+        accepteCookies = (navigator.cookieEnabled) ? true : false;
+    
+        if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled) {
+          document.cookie = "petitTest";
+          accepteCookies = (document.cookie.indexOf("petitTest") != -1) ? true : false;
+          }
+        
+        if (!accepteCookies) {
+                document.location.replace ("/stl/satelit.web?templatename=charpenteerreurcookie");
+
+        }
+
+    }
+    
+
+//--></script>
+
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Impots.gouv.fr</title>
+        <meta http-equiv="Cache-Control" content="no-cache" max-age="0" must-revalidate>
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache" content="no store">
+        <meta http-equiv="Expires" content="0" />
+        
+        <link href="/stl/styles/commun.css" rel="stylesheet" type="text/css" id="communcss" />
+        <link href="/stl/styles/posteUsagerIndefini.css" rel="stylesheet" type="text/css"  id="contextecss" />
+        <link href="/stl/styles/alternatecommun.css" rel="stylesheet" title="Affichage contrasté" type="text/css" id="alternatecommuncss"/>
+        <link href="/stl/styles/alternateposteUsagerIndefini.css" rel="stylesheet" title="Affichage contrasté" type="text/css" id="alternatecontextecss"/>
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+
+        <script src="/stl/javascript/min/bandeau.js"></script>
+
+         <script language="javascript"><!--
+            chargementstyle();
+         //--></script>
+         
+        
+        </head>
+
+    <body class="cssFormulaireFond">
+    
+        <ul id="lienaccesrapide" class="lienaccesrapide">
+            <li><a href="#ANCREOUTIL">Aller aux outils</a></li>
+            <li><a href="#ANCRECONTENU">Aller au contenu</a></li>
+        </ul>
+        <noscript>
+            <tr>
+	<td>
+		<table>
+		<tr>
+			<td width="40"></td>
+			<td align="left" class="cssOutputTexte">
+				La bonne utilisation de ce site n&eacute;cessite l'ex&eacute;cution de scripts javascript.
+				<br>
+				Veuillez donc activer les scripts javascript en modifiant les options Internet ou les préférences de votre navigateur.
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr></noscript>
+    
+        <script language="javascript">
+<!--
+	// --------------------------------------
+	// Definition et préchargement des images
+	// --------------------------------------
+
+	g_images['CONST_BOUTON_NIV_2_ON'] = 'images/puce2_on.gif';
+	g_images['CONST_COIN_DROIT_CONTEXTE'] = 'images/nav_info_application.gif';
+	g_images['CONST_COIN_GAUCHE_OUTILS'] = 'images/logo1.gif';
+	g_images['CONST_BOUTON_INFO'] = 'images/informations.gif';
+	g_images['CONST_BOUTON_OUTIL_ON'] = 'images/puce_outils_on.gif';
+	g_images['CONST_BOUTON_OUTIL_OFF'] = 'images/puce_outils_off.gif';
+	g_images['CONST_FOND_QUITTER'] = 'images/fond_quitter.jpg';
+	g_images['CONST_BOUTON_QUITTER_ON'] = 'images/cg2_btn_action_on.gif';
+	g_images['CONST_BOUTON_QUITTER_OFF'] = 'images/cg2_btn_action_off.gif';
+	g_images['CONST_BOUTON_DIVERS'] = 'images/space.gif';
+	g_images['CONST_BOUTON_DIALOGUE_SUIVANT'] = 'images/btnactiongch1.gif';
+	g_images['CONST_BOUTON_DIALOGUE_FIN'] = 'images/btnactiongch2.gif';
+	g_images['CONST_BOUTON_DIALOGUE_PRECEDENT'] = 'images/btnactiongch3.gif';
+	g_images['CONST_BOUTON_DIALOGUE_IMPRESSION'] = 'images/btnactiongchimpr.gif';
+	g_images['CONST_BOUTON_DIALOGUE_ENREGISTRER'] = 'images/btnactiongchenreg.gif';
+    g_images['CONST_BOUTON_DIALOGUE_DROIT'] = 'images/btnactiondrt.gif';
+	g_images['CONST_BOUTON_DIALOGUE_FOND'] = 'images/fond_btn_action.gif';
+	g_images['CONST_HREF_AUTRES_APPLIS_EXTERNES'] = 'images/puce_lien_perso.gif';
+	g_images['CONST_FOND_POINTILLE'] = 'images/fond1.gif';
+
+
+	// Images contextées
+	g_images['CONST_COIN_GAUCHE_CHEMINDEFER'] = 'images/cg2_doc.gif';
+	g_images['CONST_COIN_DROIT_CHEMINDEFER'] = 'images/cd2_doc.gif';
+	g_images['CONST_LIBELLE_CONTEXTE'] = 'images/inf_inact.gif';
+	g_images['CONST_IMAGE_DIODE'] = 'images/titre_perso2.png';
+	g_images['CONST_COIN_GAUCHE_MENU'] = 'images/cg_perso.gif';
+	g_images['CONST_COIN_DROIT_MENU'] = 'images/cd_perso.gif';
+	g_images['CONST_BOUTON_MENU_NIV1_ON'] = 'images/puce_perso_on.gif';
+	g_images['CONST_BOUTON_MENU_NIV1_OFF'] = 'images/puce_perso_off.gif';
+	g_images['CONST_BOUTON_MENU_NIV2_OFF'] = 'images/puce2_perso_off.gif';
+	g_images['CONST_MARQUEUR_PARAGRAPHE'] = 'images/puc_target_doc.gif';
+	g_images['CONST_MARQUEUR_LIEN'] = 'images/puce_lien_perso.gif';
+	g_images['CONST_RETOUR_LISTE'] = 'images/bt_retour-liste.gif';
+	g_images['CONST_IMAGE_COIN_DROIT_TABLEAU'] = 'images/coi_hd_recherche.gif';
+	g_images['CONST_IMAGE_COIN_DROIT_TABLEAU'] = 'images/coi_bg_clair.gif';
+	g_images['CONST_BTN_ACTION_GCH_SUIVANT_ON'] = 'images/btnactiongch1_on.gif';
+	g_images['CONST_BTN_ACTION_GCH_SUIVANT_OFF'] = 'images/btnactiongch1_off.gif';
+	g_images['CONST_BTN_ACTION_GCH_FIN_ON'] = 'images/btnactiongch2_on.gif';
+	g_images['CONST_BTN_ACTION_GCH_FIN_OFF'] = 'images/btnactiongch2_off.gif';
+	g_images['CONST_BTN_ACTION_GCH_IMPR_ON'] = 'images/btnactiongchimpr_on.gif';
+	g_images['CONST_BTN_ACTION_GCH_IMPR_OFF'] = 'images/btnactiongchimpr_off.gif';
+	g_images['CONST_BTN_ACTION_GCH_ENRG_ON'] = 'images/btnactiongenregistrer_on.gif';
+    g_images['CONST_BTN_ACTION_GCH_ENRG_OFF'] = 'images/btnactiongenregistrer_off.gif';
+	g_images['CONST_BTN_ACTION_GCH_PRECEDENT_ON'] = 'images/btnactiongch3_on.gif';
+	g_images['CONST_BTN_ACTION_GCH_PRECEDENT_OFF'] = 'images/btnactiongch3_off.gif';
+	g_images['CONST_FOND_BTN_ACTION'] = 'images/fond_btn_action.gif';
+	g_images['CONST_BTN_ACTION_DRT'] = 'images/btnactiondrt.gif';
+	g_images['CONST_BOUTON_REPLIER'] = 'images/replier_part.gif';
+	g_images['CONST_BOUTON_DEPLIER'] = 'images/deplier_part.gif';
+
+	prechargeImages ();
+//-->
+</script>
+<div id="page">
+            <table border="0" valign="top" cellspacing="0" cellpadding="0" width="100%" height="93%">
+                <tr>
+                    <td height="1px" colspan="2">
+                    <script language="javascript"><!--
+                    
+                        
+                        t_menu = g_menu;
+                        
+                        
+        
+                        construitObjetTitre ("Bienvenue sur le site du paiement de l'imp&ocirc;t");
+                        construitObjetInfoDiode ("", "", "",
+                        		"", "Quitter", "Voulez-vous quitter le service de paiement de l'impôt ?" );
+                        construitObjetInfoContexte ("Paiement de l'impôt -  ");
+                        AD ();
+
+                    //-->
+                    </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="7%">&nbsp;</td>
+                    <td width="93%" valign="top">
+                        <div id="contenu">
+                            <a name="ANCRECONTENU"></a>
+                            <script src="/stl/javascript/min/dialogue.js"></script>
+<script src="/stl/javascript/min/boutonsgeneriques.js"></script>
+<script src="/stl/javascript/min/accueil.js"></script>
+
+<form action="/stl/satelit.web" name="form1" onsubmit="return submitForm();" method="post">
+
+    <input type=hidden name="templatename" value="routage"/>
+    <input type=hidden name="contexteinitial" value="0"/>
+    <input type=hidden name="platform"/>
+    <input type=hidden name="appname"/>
+    <input type=hidden name="appcodename"/>
+    <input type=hidden name="useragent"/>
+    <input type=hidden name="appversion"/>
+
+    <script language="javascript"><!--
+        recupereInfosConnexion ();
+    //--></script>
+    
+    <script language="javascript">
+<!--
+	function PositionneLienEdito(TexteLien,CodeEdito)
+	{
+		var HTML;
+		var URL;
+		var STYLE;
+		URL	 = 'satelit.web?templatename=accueilinfoedito&codeedito=';
+		URL += CodeEdito;
+		STYLE	= 'toolbar=no,location=no,status=no,menubar=yes, width=600px,height=400px,resizable,scrollbars';
+		HTML  = '<table border="0" cellpadding="0" cellspacing="0">';
+		HTML += '<tr>';
+		HTML += '	<td class="cssBarreLien"  nowrap >';
+		HTML += '      <a ref="#" onClick= "javascript:window.open(\'' + URL + '\',\'\',\'' + STYLE + '\');" title="nouvelle fen&ecirc;tre">';
+		HTML += '		<span class="cssLien">';
+		HTML += '			<img src="/stl/images/puce_lien_perso.gif" alt="' + TexteLien + '">';
+		HTML += '		</span>';
+		HTML +=	'		&nbsp;';
+		HTML += 			TexteLien;
+		HTML += '  </a>';
+		HTML += '	</td>';
+		HTML += '</tr>';
+		HTML += '</table>';
+
+		window.document.write(HTML);
+	    
+	}
+//-->
+</script><table cellpadding=0 cellspacing=0 border="0" width="80%">
+        <tr height="30px">
+        <td>
+            <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td width="20px" align="center" valign="top">
+                    <img src="/stl/images/puc_target_doc.gif" alt="">
+                </td>
+                <td>
+                    <span class="cssCorrespondant">
+                        <b>Sur le site du paiement de l'imp&ocirc;t vous pouvez :</b>
+                    </span>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" height="10%">
+            
+            
+                <tr>
+                
+                    <td width="20px">&nbsp;
+                    </td>
+                    <td class="cssSousRubrique" nowrap>
+                        <ul>
+                            Souscrire ou modifier votre souscription au pr&eacute;l&egrave;vement mensuel ou au pr&eacute;l&egrave;vement &agrave; l'&eacute;ch&eacute;ance de vos imp&ocirc;ts<br>
+                            <script language="javascript"><!--
+                                PositionneLienEdito('En savoir plus','ME3');
+                            //--></script>
+                            Payer votre imp&ocirc;t en ligne                                    
+                            <script language="javascript"><!--
+                                PositionneLienEdito('En savoir plus','ME4');
+                            //--></script>
+                                  
+                        </ul>
+                    </td>
+                </tr>
+    
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <br>
+            <table border="0" width="100%">
+                <tr>
+                    <td>
+                        <span class="cssOutputTexte">
+                        <script language="javascript"><!--
+                                CalculerTexteRouge ('0');
+                        //--></script>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td width="40px"></td>
+                                <td>
+                                <span class="cssFormulaireLibelle">
+                                    Num&eacute;ro fiscal  :
+                                </span>
+                                <input type="text" size="15" maxlength="14" name="identifiant" id ="accueil_identifiant"">
+                                <script language="javascript"><!--
+                                    document.form1.identifiant.focus();
+                                //--></script>
+                            </td>
+                            <td width="100px"></td>
+                            <td >
+                                <script language="javascript"><!--
+                                ICONE = "1";
+                                ID_IMAGE = "ImgContinue";
+                                TITRE_BOUTON = "Continuer";
+                                INFOBULLE = "Continuer";
+                                PARAM_FORM1 = "";
+                                NOM_FONCTION = "submitForm()";
+
+                                BoutonGenerique_Submit('/stl/images');
+
+                                //--></script>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+
+    
+    <tr>
+        <td>
+            <br>
+            <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td>
+                    <script language="javascript"><!--
+                        PositionneLienEdito('Consulter les caract&eacute;ristiques techniques de s&eacute;curit&eacute; du site','ME5');
+                    //--></script>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    
+        <DIV id="footer">
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+	<td height="20px"></td>
+</tr>
+<tr>
+	<td class="cssFondGris" width="100%" height="1px"></td>
+</tr>
+<tr>
+    <td align="center" class="cssTexteGris">
+        <p>&copy; Direction g&eacute;n&eacute;rale des Finances publiques <span aria-hidden="true"> - </span> 
+            <a class="cssTexteGris" href="https://www.impots.gouv.fr/portail/mentions-legales" target="_blank" rel="noopener"
+               title="Mentions légales (nouvelle fenêtre)" aria-label="Mentions légales (nouvelle fenêtre)">Mentions légales
+            </a>
+            <span aria-hidden="true"> - </span>
+            <a class="cssTexteGris" ref="#" onClick= "javascript:window.open('/stl/satelit.web?templatename=accessibilitergaa');"
+                 target="_blank" rel="noopener" title="Accessibilité : non conforme" onmouseover="this.style.cursor='pointer'"
+                 style="text-decoration: underline" aria-label="Accessibilité : non conforme">Accessibilité : non conforme</a>
+        </p>
+    </td>
+</tr>
+
+</table>
+</DIV></body>
+</html>
