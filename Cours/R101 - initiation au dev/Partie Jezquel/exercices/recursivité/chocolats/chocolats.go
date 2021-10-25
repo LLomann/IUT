@@ -1,7 +1,8 @@
 package chocolats
 
 /*
-Une marque de barres de chocolat fait une promotion~: si on retourne k embalages on en obtient une gratuite. On se demande alors combien de barres de chocolat on peut obtenir quand on dispose de n euros et que chacune coûte m euros.
+Une marque de barres de chocolat fait une promotion~: si on retourne k embalages on en obtient une gratuite.
+On se demande alors combien de barres de chocolat on peut obtenir quand on dispose de n euros et que chacune coûte m euros.
 La fonction miam doit répondre (de manière récursive) à cette question.
 
 # Entrées
@@ -15,5 +16,10 @@ La fonction miam doit répondre (de manière récursive) à cette question.
 # Exemple
 */
 func miam(n, m, k uint) (choco uint) {
+
+	if n < m {
+		return 0
+	}
+
 	return choco
 }

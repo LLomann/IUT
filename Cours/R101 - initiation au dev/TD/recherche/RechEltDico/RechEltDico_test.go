@@ -1,4 +1,4 @@
-func Testpackage RechElt
+package RechEltDivco
 
 import "testing"
 
