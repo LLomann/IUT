@@ -57,3 +57,9 @@ func TestPasPalindrome3(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestPasPalindrome4(t *testing.T) {
+	if !estPalindrome("jeffej") {
+		t.Fail()
+	}
+}

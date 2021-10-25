@@ -1,6 +1,7 @@
 package chainesbinaires
 
 import (
+	"fmt"
 	"sort"
 	"testing"
 )
@@ -34,6 +35,7 @@ func TestUn(t *testing.T) {
 }
 
 func TestTrois(t *testing.T) {
+	fmt.Println(calculeChaines(3))
 	if !memeContenu(
 		calculeChaines(3),
 		[]string{"000", "001", "010", "100", "101"},
@@ -43,6 +45,7 @@ func TestTrois(t *testing.T) {
 }
 
 func TestCinq(t *testing.T) {
+	fmt.Println(calculeChaines(5))
 	if !memeContenu(
 		calculeChaines(5),
 		[]string{
