@@ -18,13 +18,15 @@ func somme(tab []int) (res int) {
 		return 0
 	}
 
-	var somme int
-
 	for i:=0; i<len(tab); i++ {
-		somme = somme + tab[i]
+		res = res + tab[i]
 	}
-
-	res = somme
 
 	return res
 }
+
+/* 	for_, v := range tab {
+		res += v
+	}
+	return res
+*/
