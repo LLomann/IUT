@@ -1,25 +1,13 @@
 package Tri
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-var tab2 []int
-var b bool
-var err error
+func TestePrésent(t *testing.T) {
 
-func TestVide1(t *testing.T) {
-
-	tab2, _, _= tri_ins(nil) 
-		if tab2 == nil {
-			t.Fail()
-		}
-
-}
-
-func TestVide2(t *testing.T) {
-
-	tab2, _, _= tri_ins([]int{}) 
-		if len(tab2) != 0 {
-			t.Fail()
-		}
+	fmt.Println(tri_ins([]int{1, 32, 7, 23, 9, 5, 2, 3}))
+	t.Fail()
 
 }
