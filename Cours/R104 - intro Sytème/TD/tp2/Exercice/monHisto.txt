@@ -1,0 +1,1093 @@
+685  go build ExFlag.go 
+  686  ./ExFlag 1 2 3
+  687  ./ExFlag
+  688  cd
+  689  ls
+  690  cd cours/
+  691  ls
+  692  git add .
+  693  git commit -m "lo"
+  694  git push -u
+  695  git push -u origin main
+  696  git push -u
+  697  go run prog.go
+  698  cd IUT/Cours/R101\ -\ initiation\ au\ dev/Partie\ 2/src/
+  699  ls
+  700  go build tabtab.go 
+  701  ./tabtab
+  702  go run tabtab
+  703  go run tabtab.go
+  704  code
+  705  cd
+  706  ls
+  707  cd cours/IUT/Cours/R101\ -\ initiation\ au\ dev/
+  708  mkdir Partie\ 3
+  709  ls
+  710  cd Partie\ 3
+  711  ls
+  712  git add .
+  713  git commit -m "new"
+  714  git push -u
+  715  git config --global user.name LLomann
+  716  git config --global user.email lomannlcq@hotmail.fr
+  717  git clone http:// github/LLomann/IUT
+  718  git clone http:// github.com/LLomann/IUT
+  719  git clone http://github.com/LLomann/IUT
+  720  ls
+  721  cd IUT/Cours/R103\ \ -\ architecture/TP
+  722  ls
+  723  java -jar Logisim-ITA.jar 
+  724  git add .
+  725  git commit -m "archi"
+  726  git push -u
+  727  ls
+  728  git config --global user.name LLomann
+  729  git config --global user.email lomannlcq@hotmail.fr
+  730  git clone http://github.com/LLomann/IUT
+  731  cd IUT/Cours/R101\ -\ initiation\ au\ dev/Partie\ 3/
+  732  ls
+  733  code
+  734  git add .
+  735  git commit -u "dev"
+  736  cd
+  737  cd IUT
+  738  ls
+  739  git add .
+  740  git commit -m "dev"
+  741  git push -u
+  742  ls
+  743  go run create.go 
+  744  go run fscanln.go 
+  745  go run bufio.go 
+  746  go run dernierExo.go 
+  747  ls
+  748  cd ../
+  749  ls
+  750  cd src/
+  751  ls
+  752  go run dernierExo.go
+  753  git cin
+  754  git config --global user.name LLomann
+  755  git config --global user.email lomannlcq@hotmail.fr
+  756  git clone http://github.com/LLomann/IUT
+  757  code
+  758  git add .
+  759  ls
+  760  cd IUT
+  761  ms
+  762  ls
+  763  git add .
+  764  git commit -m "exo de dev partie3"
+  765  git push -u
+  766  ls
+  767  go run dernierExo.go 
+  768  ls
+  769  cd basiques/
+  770  ls
+  771  go run ensemble/
+  772  go run ensemble.go
+  773  ls
+  774  cd ensemble/
+  775  ls
+  776  go test 
+  777  ls
+  778  git confing --global user.name LLomann
+  779  git config --global user.name LLomann
+  780  git config --global user.email lomannlcq@hotmail.fr
+  781  git clone http://github.com/LLomann/IUT
+  782  git clone htttp://gitlab.univ-nantes.fr/jezquel-l/exercices-introdev
+  783  git clone http://gitlab.univ-nantes.fr/jezquel-l/exercices-introdev
+  784  git clone https://gitlab.univ-nantes.fr/jezquel-l/exercices-introdev
+  785  code
+  786  git clone https://gitlab.univ-nantes.fr/jezquel-l/exercices-introdev.git
+  787  git clone https//github.com/Ewennnn/Go
+  788  git clone https://github.com/Ewennnn/Go
+  789  git clone https://gitlab.univ-nantes.fr/jezequel-l/exercices-introdev
+  790  ls
+  791  cd IUT
+  792  ls
+  793  git add .
+  794  gir co
+  795  git commit -m "dev teste"
+  796  git push -u
+  797  git add .
+  798  git commit -m "dev teste"
+  799  git push -u
+  800  git add .
+  801  git commit -m "dev teste"
+  802  git push -u
+  803  git config --global user.name LLomann
+  804  git config --global user.email lomannlcq@hotmail.fr
+  805  git clone https://github.com/LLomann/IUT
+  806  code
+  807  ls
+  808  cd IUT/Cours/R106\ -\ Mathématiques\ discrète/TP-TD/Exercices/
+  809  ls
+  810  python3 tutorielBis.py 
+  811  code
+  812  python3 tutorielBis.py 
+  813  /bin/python3 "/home/E218274E/IUT/Cours/R106 - Mathématiques discrète/TP-TD/Exercices/tutorielBis.py"
+  814  python3 tutorielBis.py 
+  815  /bin/python3 "/home/E218274E/IUT/Cours/R106 - Mathématiques discrète/TP-TD/Exercices/tutorielBis.py"
+  816  ls
+  817  cd
+  818  cd IUT
+  819  git add .
+  820  git commit -m " math"
+  821  git push - u
+  822  git push -u
+  823  git confing --global user.name LLomann
+  824  git config --global user.name LLomann
+  825  git config --global user.email lomannlcq@hotmail.fr
+  826  git clone https://github.com/LLomann/IUT
+  827  git add .
+  828  ls
+  829  cd IUT
+  830  git add .
+  831  git commit "anglais"
+  832  git commit -m "anglais"
+  833  git push -u
+  834  git add .
+  835  git commit -m "anglais"
+  836  git push -u
+  837  git add .
+  838  git commit -m "anglais"
+  839  git push -u
+  840  cd IUT
+  841  git pull
+  842  ls
+  843  cd Cours/R103\ \ -\ architecture/TP/
+  844  ls
+  845  java -jar Logisim-ITA.jar
+  846  ls
+  847  git add .
+  848  git commit -m "archi"
+  849  git push -u
+  850  ls
+  851  git config --global user.name LLomann
+  852  git config --global user.email lomannlcq@hotmail.fr
+  853  git clone http://github.com/LLomann/IUT
+  854  ls
+  855  cd IUT/Cours/R106\ -\ Mathématiques\ discrète/TP-TD/Exercices/
+  856  ls
+  857  code
+  858  git add .
+  859  git commit -m "math"
+  860  git push -u
+  861  ls
+  862  python3 tutorielBis.py
+  863  cd IUT
+  864  git pull
+  865  ls
+  866  git config --global user.name LLomann
+  867  git config --global user.email lomannlcq@hotmail.fr
+  868  git clone http://github.com/LLomann/IUT
+  869  cd IUT/Cours/R101\ -\ initiation\ au\ dev/
+  870  ls
+  871  cd
+  872  git clone https://gitlab.univ-nantes.fr/jezequel-l/introdev
+  873  ls
+  874  cd IUT
+  875  git add .
+  876  git commit -m "dev"
+  877  git push -u
+  878  code
+  879  git add .
+  880  git commit -m"dev monaie"
+  881  git push -u
+  882  ls
+  883  cd exercices/basiques/ensemble/
+  884  ls
+  885  go run enxemble
+  886  go test 
+  887  ls
+  888  cd ../
+  889  ls
+  890  cd facteurspremiers/
+  891  ls
+  892  go test
+  893  go run facteurspremiers_test.go 
+  894  go test
+  895  ls
+  896  cd ../
+  897  ls
+  898  cd factorielle/
+  899  go test
+  900  cd ../
+  901  ls
+  902  cd monnaie
+  903  ls
+  904  go test
+  905  ls
+  906  git config --global user.name LLomann
+  907  git config --global user.email lomannlcq@hotmail.fr
+  908  git clone http://github.com/LLomann/IUT
+  909  cd IUT/Cours/R101\ -\ initiation\ au\ dev/
+  910  ls
+  911  code
+  912  ls
+  913  cd IUT
+  914  git add .
+  915  git commit -m "dev"
+  916  git push -u
+  917  ls
+  918  cd recherche/
+  919  ls
+  920  go mod int recherche
+  921  go mod init recherche
+  922  ls
+  923  go RechElt.go
+  924  ls
+  925  go run testRechElt.go 
+  926  ls
+  927  go test
+  928  ls
+  929  go test
+  930  ls
+  931  go test
+  932  ls
+  933  go test
+  934  ls
+  935  cd ../
+  936  ls
+  937  cd RechMin/
+  938  go test
+  939  code
+  940  ls
+  941  cd IUT
+  942  git pull
+  943  ce IUT
+  944  ls
+  945  cd Cours/R108\ -\ Gestion\ de\ projet\ et\ des\ organisation/
+  946  ls
+  947  cd projet\ de\ groupe\ OBD/
+  948  ls
+  949  cd
+  950  cd IUT/
+  951  ls
+  952  git add.
+  953  git add .
+  954  git commit -m "gestion OBD"
+  955  git push -u
+  956  ls
+  957  cd IUT
+  958  git pull
+  959  git pull --rebase
+  960  git add .
+  961  git commit -m "com"
+  962  git push -u
+  963  cd IUT
+  964  git add .
+  965  git commi -m "com"
+  966  git commti -m "com"
+  967  git comit -m " com"
+  968  git commit -m "com"
+  969  git push -i
+  970  git push -u
+  971  ls
+  972  cd matrice/
+  973  ls
+  974  go test
+  975  cd ../
+  976  ls
+  977  cd maxoccurrences/
+  978  ls
+  979  go test
+  980  ls
+  981  ce IUT
+  982  cd IUT
+  983  cd Cours/R101\ -\ initiation\ au\ dev/Partie\ 
+  984  cd Cours/R101\ -\ initiation\ au\ dev/Partie\ Jezquel/
+  985  ls
+  986  code
+  987  cd ../
+  988  ls
+  989  mkdir module1
+  990  cd module1/
+  991  ls
+  992  go mod init module1
+  993  cat module1.mod
+  994  cat go mod
+  995  cat g.mod
+  996  cat go.mod
+  997  sl
+  998  ls
+  999  cd ../
+ 1000  ls
+ 1001  cd module/
+ 1002  ls
+ 1003  mkdir module2
+ 1004  ls
+ 1005  cd module2
+ 1006  go mod init module2
+ 1007  cd ../
+ 1008  ls
+ 1009  cd module1
+ 1010  touch module1
+ 1011  ls
+ 1012  cd ../
+ 1013  ls
+ 1014  cd module2
+ 1015  ls*
+ 1016  ls
+ 1017  touch module2
+ 1018  ls
+ 1019  cd ../
+ 1020  ls
+ 1021  cd module2
+ 1022  go build 
+ 1023  ls
+ 1024  go build module2
+ 1025  ls
+ 1026  cd
+ 1027  cd Cours/R101\ -\ initiation\ au\ dev/Partie\ Jezquel/
+ 1028  ls
+ 1029  cd Cours/R101\ -\ initiation\ au\ dev/Partie\ Jezquel
+ 1030  cd Cours/R101\ -\ initiation\ au\ dev
+ 1031  ls
+ 1032  cd IUT/Cours/R101\ -\ initiation\ au\ dev/Partie\ Jezquel/
+ 1033  cd ../
+ 1034  ls
+ 1035  cd module/
+ 1036  ls
+ 1037  lls module2
+ 1038  ls module2
+ 1039  go build test
+ 1040  ls
+ 1041  cd module2
+ 1042  go run test
+ 1043  go run test.go
+ 1044  go run module2.go
+ 1045  ls
+ 1046  cat go.mot
+ 1047  cat go.mod
+ 1048  go mod tidy
+ 1049  cd ../
+ 1050  cd module1
+ 1051  ls
+ 1052  cat go mod
+ 1053  cat go.mod
+ 1054  ls
+ 1055  cd ../
+ 1056  cd module2
+ 1057  ls
+ 1058  go mod tidy
+ 1059  cd ../
+ 1060  ls
+ 1061  cd module1
+ 1062  go mod init module1
+ 1063  rm go.mod
+ 1064  go mod init module1
+ 1065  cd ..:
+ 1066  cd ../
+ 1067  cd module2
+ 1068  rm go.mod
+ 1069  go mod init module2
+ 1070  go mod tidy
+ 1071  go build test.go
+ 1072  ls
+ 1073  go run test.go
+ 1074  ls
+ 1075  go run test.go
+ 1076  ls
+ 1077  cat go.mod
+ 1078  go build test.go
+ 1079  ls
+ 1080  go build test.go
+ 1081  ./test
+ 1082  ls
+ 1083  cd ../../
+ 1084  ls
+ 1085  cd Partie\ Jezquel/
+ 1086  ls
+ 1087  cd cours-recherche/
+ 1088  ls
+ 1089  cd ../../
+ 1090  ls
+ 1091  cd Partie\ Jezquel/
+ 1092  ls
+ 1093  cd exercices/
+ 1094  cd recherche/
+ 1095  ls
+ 1096  code
+ 1097  git add .
+ 1098  git commit -m "dev"
+ 1099  git push -u
+ 1100  ls
+ 1101  git config --global user.name LLomann
+ 1102  git config --global user.email lomannlcq@hotmail.fr
+ 1103  git clone http://github.com/LLomann/IUT
+ 1104  ls
+ 1105  cd IUT/
+ 1106  cd Cours/R103\ \ -\ architecture/TP/
+ 1107  ls
+ 1108  java -jar Logisim-ITA.jar
+ 1109  git add .
+ 1110  git commit -m"archi"
+ 1111  git push -u
+ 1112  git config --global user.name LLoamnn
+ 1113  git config --global user.eamail lomannlcq@hotmail.fr
+ 1114  git clone htptp://github.com/LLomann/IUT
+ 1115  git clone htptp://github.com/LLomann/IUT/
+ 1116  git clone http://github.com/LLomann/IUT/
+ 1117  cd IUT/Cours/R101\ -\ initiation\ au\ dev/
+ 1118  code
+ 1119  gir add .
+ 1120  git add .
+ 1121  git commit "entrainement"
+ 1122  git commit -m "entrainement"
+ 1123  git push -u 
+ 1124  python3 tutorielBis.py 
+ 1125  cd IUT
+ 1126  ls
+ 1127  gigt config --global user.name LLomann
+ 1128  git config --global user.name LLomann
+ 1129  git config --global user.email lomannlcq@hotmail.fr
+ 1130  git clone http:
+ 1131  git clone http://github.com/LLomann/IUT
+ 1132  code
+ 1133  git add .
+ 1134  cd IUt
+ 1135  git IUT
+ 1136  cd IUT
+ 1137  git add .
+ 1138  git commit -m " lwi m'enquiquine ety je me trompe dans les touches"
+ 1139  git push -u
+ 1140  ls
+ 1141  git config --global user.name LLomann
+ 1142  git config --global user.email lomannlcq@hotmail.fr
+ 1143  git clone http://github.com/LLomann/IUT
+ 1144  code
+ 1145  git add .
+ 1146  cd IUT
+ 1147  git add .
+ 1148  git commit -m"math"
+ 1149  git push -u
+ 1150  python3 18-10-21.py 
+ 1151  python3 18-10-21.py
+ 1152  time python3 18-10-21.py
+ 1153  ls
+ 1154  cd SelectElt/
+ 1155  go test
+ 1156  ls
+ 1157  git config --global user.name LLomann
+ 1158  git config --global user.email lomannlcq@hotmail.fr
+ 1159  git clone http://github.com/LLomann/IUT
+ 1160  code
+ 1161  cd IUT
+ 1162  git add .
+ 1163  git commit -m " dev recherche"
+ 1164  goit push -u
+ 1165  git push -u
+ 1166  git commit -m " dev recherche"
+ 1167  git push -u
+ 1168  cd
+ 1169  cd IUT/Cours/R101\ -\ initiation\ au\ dev/Partie\ Jezquel/exercices/
+ 1170  ls
+ 1171  cd recherche/matrice/
+ 1172  ls
+ 1173  go test
+ 1174  cd ../
+ 1175  ls
+ 1176  cd classement/
+ 1177  go test
+ 1178  cd ../
+ 1179  cd maxoccurrences/
+ 1180  ls
+ 1181  go test
+ 1182  cd ../
+ 1183  cd classement/
+ 1184  go tset
+ 1185  go test
+ 1186  cd ..:
+ 1187  cd  ../
+ 1188  ..: .:. .... :: :./
+ 1189  ..: .:. .... :: :.. /
+ 1190  ..: .:. .... :: :.. :.: ;.  :°  :]  :}
+ 1191  cd ../
+ 1192  ls
+ 1193  cd recherche/
+ 1194  ls
+ 1195  cd nombrespremiers
+ 1196  ls
+ 1197  go tste
+ 1198  go test
+ 1199  cd ../
+ 1200  cd nombrespremiers2/
+ 1201  go test
+ 1202  ls
+ 1203  git congig --global user.name LLomann
+ 1204  git config --global user.name LLomann
+ 1205  git config --global user.email lomannlcq@hotmail.fr
+ 1206  git clone http://github.com/Llomann/IUT
+ 1207  ALS
+ 1208  LS
+ 1209  ls
+ 1210  cd IUT
+ 1211  code
+ 1212  cd IUT
+ 1213  git add .
+ 1214  git commit -m "dev"
+ 1215  git push -u
+ 1216  ls
+ 1217  cd IUT
+ 1218  git pull
+ 1219  cd Cours/R103\ \ -\ architecture/TP/
+ 1220  ls
+ 1221  java -jar Logisim-ITA.jar 
+ 1222  git add .
+ 1223  git commit -m "archi"
+ 1224  git push -u
+ 1225  cd IUT
+ 1226  git pull
+ 1227  code
+ 1228  cd IUT
+ 1229  git add .
+ 1230  git commi -m"html"
+ 1231  git commit -m"html"
+ 1232  git push -u
+ 1233  ls
+ 1234  git config --global user.name LLomann$
+ 1235  git config --global user.email lomannlcq@hotmail.fr
+ 1236  git clone http::
+ 1237  git clone http://github.com/LLomann/IUT
+ 1238  git push
+ 1239  git pull
+ 1240  cd IUT
+ 1241  git pull
+ 1242  git add .
+ 1243  git commit -m"module dev"
+ 1244  git push -u
+ 1245  git config --global user.name LLomann
+ 1246  git config --global user.email lomannlcq@hotmail.fr
+ 1247  git clone http://github.com/LLomann/IUT
+ 1248  git add .
+ 1249  git commit -m"Eve"
+ 1250  git commit -m "eve"
+ 1251  git commit -m"EVE"
+ 1252  cd IUT
+ 1253  git commit -m"EVE"
+ 1254  git add .
+ 1255  git commit -m"EVE"
+ 1256  git push -u
+ 1257  ls
+ 1258  cd *
+ 1259  cd
+ 1260  cd IUT/Cours/R101\ -\ initiation\ au\ dev/TD/
+ 1261  ls
+ 1262  cd
+ 1263  mkdir Tri
+ 1264  ls
+ 1265  cd IUT/Cours/R101\ -\ initiation\ au\ dev/TD/
+ 1266  ls
+ 1267  mkdir Tri
+ 1268  ls
+ 1269  cd Tri
+ 1270  ls
+ 1271  mkdir tri_fusion
+ 1272  mkdir tri_rapide
+ 1273  mkdir tri_ins_place
+ 1274  mkdir tri_ins
+ 1275  ls
+ 1276  go mod init tri_fusion/
+ 1277  go mod init tri_fusion
+ 1278  ls
+ 1279  cd ../
+ 1280  ls
+ 1281  cd Tri/
+ 1282  go mod init Tri
+ 1283  ls
+ 1284  cd tri_ins
+ 1285  go test
+ 1286  go test -cover
+ 1287  ls
+ 1288  cd IUT
+ 1289  git pull
+ 1290  code
+ 1291  cd
+ 1292  cd IUt
+ 1293  cd IUT
+ 1294  git add .
+ 1295  git commit -m"init"
+ 1296  git push -u
+ 1297  git config --global user.name LLomann
+ 1298  git config --global user.email lomannlcq@hotmail.fr
+ 1299  git clone http://github.com/LLomann
+ 1300  git clone http://github.com/LLomann/IUT
+ 1301  code
+ 1302  cd IUT
+ 1303  git add .
+ 1304  git commit -m"html"
+ 1305  git push -u
+ 1306  git config --global user.name LLomann
+ 1307  git config --global user.email lomannlcq@hotmail.fr
+ 1308  git clone http://github.com/LLomann/IUT
+ 1309  git config --global user.name LLomann
+ 1310  git config --global user.email lomannlcq@hotmail.fr
+ 1311  git clone http://github.com/LLomann/IUT
+ 1312  git config --global user.name LLomann
+ 1313  git config --global user.email lomannlcq@hotmail.fr
+ 1314  git clone http://github.com/LLomann/IUT
+ 1315  git pull
+ 1316  cd IUT
+ 1317  git pull
+ 1318  code
+ 1319  cd Cours/R104\ -\ système/TP1/
+ 1320  ls
+ 1321  cd tp1/
+ 1322  cd Tp1/
+ 1323  ls
+ 1324  cd IUT
+ 1325  git pull
+ 1326  date -u
+ 1327  date -universal
+ 1328  date --universal
+ 1329  cd type
+ 1330  type cd
+ 1331  cd --help
+ 1332  cd help
+ 1333  help
+ 1334  apropos
+ 1335  h
+ 1336  cd -pasbon
+ 1337  dat --help
+ 1338  date --help
+ 1339  date Epoch
+ 1340  date %y
+ 1341  date -%y
+ 1342  date +"%d %e %Y
+ 1343  date +"%d %e %Y"
+ 1344  man date
+ 1345  man man
+ 1346  type --help
+ 1347  type cd
+ 1348  type ls
+ 1349  date apropos
+ 1350  apropos
+ 1351  apropos date
+ 1352  apropos help
+ 1353  apropos --help
+ 1354  apropos date
+ 1355  apropos man
+ 1356  apropos calendar
+ 1357  apropos cd
+ 1358  cal
+ 1359  ncal
+ 1360  man apropos
+ 1361  cal
+ 1362  apropos calendar
+ 1363  difftime
+ 1364  calendar
+ 1365  ncal
+ 1366  man apropos
+ 1367  man calendar
+ 1368  calendar --help
+ 1369  calendar help
+ 1370  calendar -fPâques
+ 1371  calendar -f Pâques
+ 1372  man calendar
+ 1373  calendar help
+ 1374  calendar -help
+ 1375  calendar --*help
+ 1376  calendar --help
+ 1377  canl
+ 1378  apropos calendar
+ 1379  cal help
+ 1380  cal --help
+ 1381  ncal -e
+ 1382  man cal
+ 1383  cal help
+ 1384  ncal help
+ 1385  cal --help
+ 1386  man cal
+ 1387  root
+ 1388  /root
+ 1389  pwd
+ 1390  cd
+ 1391  ../../
+ 1392  ../
+ 1393  ls
+ 1394  ../
+ 1395  cd IUT/Cours/R104\ -\ système/TP1/
+ 1396  cd
+ 1397  ../
+ 1398  ls
+ 1399  cd /
+ 1400  ls
+ 1401  cd media/
+ 1402  ls
+ 1403  cd ../
+ 1404  cd media/
+ 1405  ls
+ 1406  man pwd
+ 1407  man cd
+ 1408  cd
+ 1409  cd Tp1
+ 1410  pwd
+ 1411  ls
+ 1412  ls/home/E218274E
+ 1413  ls~E218274E
+ 1414  git add .
+ 1415  cd IUT
+ 1416  git add .
+ 1417  girt add .
+ 1418  git add .
+ 1419  cd
+ 1420  git add .
+ 1421  ls
+ 1422  cd Tri/
+ 1423  ls
+ 1424  cd tri_ins
+ 1425  go test
+ 1426  go test -cover
+ 1427  ls
+ 1428  git config --global user.name LLomann
+ 1429  git config --global user.email lomannlcq@hotmail.fr
+ 1430  git clone http://github.com/LLomann/IUT
+ 1431  code
+ 1432  cd IUT/Cours/R101\ -\ initiation\ au\ dev/E218274E\ Lecoq\ Lomann/exercice
+ 1433  cd IUT/Cours/R101\ -\ initiation\ au\ dev/E218274E\ Lecoq\ Lomann/
+ 1434  ls
+ 1435  cd exercice4
+ 1436  go test
+ 1437  git add .
+ 1438  git commit -m"dev ins_"
+ 1439  git push -u
+ 1440  ls
+ 1441  cd IUT
+ 1442  git pull
+ 1443  cd IUT
+ 1444  cd Cours/R104\ -\ système/TP1/
+ 1445  ls
+ 1446  cd tp1/
+ 1447  ls
+ 1448  cd tp
+ 1449  ls
+ 1450  cd Tp1/
+ 1451  ls
+ 1452  cd ../
+ 1453  ls
+ 1454  mkdir Trav
+ 1455  mkdir Un
+ 1456  cp Un/../Trav
+ 1457  cd --help
+ 1458  cp --help
+ 1459  cp Un/ ../Trav
+ 1460  cp Un../Trav/Un
+ 1461  cp Un../Trav
+ 1462  cp Un ../Trav
+ 1463  cp Un /../Trav
+ 1464  cp Un/ ../UN
+ 1465  cp Un/ ../Trave
+ 1466  cp Un/ ../Trave/Un
+ 1467  cp Un /../Trav
+ 1468  cp -r /../Trave
+ 1469  cp -r Un/ ../Trave
+ 1470  ls
+ 1471  rmdir Un
+ 1472  ls$
+ 1473  ls
+ 1474  touch unTexte.txt
+ 1475  ls
+ 1476  cd Trav
+ 1477  cd un
+ 1478  cd UN
+ 1479  cd Un
+ 1480  ls
+ 1481  cd ../
+ 1482  ls
+ 1483  cd Trav
+ 1484  ls
+ 1485  cd ../
+ 1486  mkdir Un
+ 1487  ls
+ 1488  cp Un/ Trave
+ 1489  cp Un/ /trave
+ 1490  cp Un/ ../Trave
+ 1491  cp -r Un/ Trave
+ 1492  ls
+ 1493  rmdir Trave
+ 1494  ls
+ 1495  cd Trav
+ 1496  ls
+ 1497  cd ..:
+ 1498  cd ../
+ 1499  ls
+ 1500  cp -r Un/ Trav
+ 1501  ls
+ 1502  cd Trav/
+ 1503  ls
+ 1504  cd ..:
+ 1505  cd ../
+ 1506  ls
+ 1507  mkdir Un
+ 1508  rmdir Un
+ 1509  ls
+ 1510  cd Trav
+ 1511  cd Un
+ 1512  mkdir Deux
+ 1513  cp -r Deux/ ../
+ 1514  ls
+ 1515  mrdir Deux/
+ 1516  rmdir Deux/
+ 1517  ls
+ 1518  cd ../
+ 1519  ls
+ 1520  cd Deux/
+ 1521  cp help
+ 1522  cp --help
+ 1523  cd ../
+ 1524  ls
+ 1525  cd ../
+ 1526  ls
+ 1527  cd Trav/Deux/
+ 1528  ls
+ 1529  cp ../../unTexte.txt .
+ 1530  ls
+ 1531  cd ../../
+ 1532  rm unTexte.txt 
+ 1533  ls
+ 1534  cd Trav/Deux/
+ 1535  ls
+ 1536  cd ../../
+ 1537  ls
+ 1538  cd Trav
+ 1539  ls
+ 1540  rmdir Deux
+ 1541  rm help
+ 1542  rm --help
+ 1543  rm -r  help
+ 1544  rm -r Deux/
+ 1545  ls
+ 1546  cd
+ 1547  pwd
+ 1548  id
+ 1549  id help
+ 1550  man id
+ 1551  apropos id
+ 1552  id
+ 1553  ls -l
+ 1554  ls
+ 1555  cd IUT/Cours/R104\ -\ système/TP1/
+ 1556  man chmod
+ 1557  chmod --help
+ 1558  chown --help
+ 1559  chmod --help
+ 1560  chgrp --help
+ 1561  ls
+ 1562  cd tp1/
+ 1563  ls
+ 1564  cd Tp1
+ 1565  ls
+ 1566  cd Trois/
+ 1567  mkdir Dossier
+ 1568  ls
+ 1569  id
+ 1570  ls -1 Dossier/
+ 1571  ls
+ 1572  ls -l
+ 1573  ls -l Dossier
+ 1574  chmod 754 Dossier/
+ 1575  ls -l
+ 1576  chmod 754 illisible.txt
+ 1577  ls -l
+ 1578  chmod 764 illisible.txt
+ 1579  ls -l
+ 1580  chmod 777 cmd.sh 
+ 1581  ld
+ 1582  ls- l
+ 1583  ls -l
+ 1584  ./cmd.sh
+ 1585  chmod 733 Impenetrable
+ 1586  ls -l
+ 1587  cd Impenetrable
+ 1588  ls
+ 1589  cd ../
+ 1590  ls
+ 1591  ls -l
+ 1592  chmod u=rwd,g=rw-,o=r-- illisible.txt
+ 1593  chmod u+rwd,g+rw-,o+r-- illisible.txt
+ 1594  chmod u+rwd,g+rw,o+r illisible.txt
+ 1595  chmod u+w,g=rx,o+w illisible.txt
+ 1596  ls -l
+ 1597  chmod u+w,g+rx,o+w illisible.txt
+ 1598  chmod 444 illisibles2.txt
+ 1599  chmod 444 illisible2.txt 
+ 1600  ls -l
+ 1601  LS -L
+ 1602  ls -l
+ 1603  chmod 777 cmd2.sh
+ 1604  id
+ 1605  chmod 766 Impenetrable2
+ 1606  cd im
+ 1607  cd Impenetrable
+ 1608  ls
+ 1609  git config --global user.name LLomann
+ 1610  git config --global user.email lomannlcq@hotmail.fr
+ 1611  git clone http://hitub.com/LLomann/IUT
+ 1612  git clone http://github.com/LLomann/IUT
+ 1613  cd IUT
+ 1614  git add .
+ 1615  git commit -m"jeudi aprem"
+ 1616  git push -u
+ 1617  cd IUT
+ 1618  git add .
+ 1619  git commit -m"jeudi aprem"
+ 1620  git push -u
+ 1621  ls
+ 1622  cd IUT
+ 1623  git add .
+ 1624  git commit -m"archi"
+ 1625  git push -u
+ 1626  ls
+ 1627  cd tri_ins
+ 1628  ls
+ 1629  go test
+ 1630  ls
+ 1631  go test
+ 1632  go run struct.go
+ 1633  ls
+ 1634  cd src
+ 1635  go run struct.go
+ 1636  go run struct2.go
+ 1637  go run struct3.go
+ 1638  go run methode.go
+ 1639  ls
+ 1640  go run mise_en_pratique.go 
+ 1641  git config --global user.name LLomann
+ 1642  git config --global user.email lomannlcq@hotmail.fr
+ 1643  git clone http://github.com/LLomann/IUT
+ 1644  code
+ 1645  git add . 
+ 1646  cd IUT
+ 1647  git add .
+ 1648  git commit -m " dev"
+ 1649  git clone -u
+ 1650  git push -u
+ 1651  git config --global user.name LLomann
+ 1652  git config --global user.email lomannlcq@hotmail.fr
+ 1653  git clone http://github.com/LLomann/IUT
+ 1654  git clone http://gitlab.com/LLomann/IUT
+ 1655  cd IUT
+ 1656  git add .
+ 1657  git commit -m " intro BD"
+ 1658  git push -u
+ 1659  git clone http://gitlab.com/LLomann/IUT
+ 1660  ls
+ 1661  cd IUT
+ 1662  ls
+ 1663  cd Cours/R105
+ 1664  cd ../
+ 1665  ls
+ 1666  cd ..:
+ 1667  cd ../
+ 1668  ls
+ 1669  rm IUT
+ 1670  rmkdir IUT
+ 1671  rmdir IUT
+ 1672  git clone http://github.com/LLomann/IUT
+ 1673  git clone http://github.com/LLomann/iut
+ 1674  ls
+ 1675  git clone http://github.com/LLomann/iut
+ 1676  ls
+ 1677  git add .
+ 1678  cd iut
+ 1679  git add .
+ 1680  git commit -m"intro"
+ 1681  git push -u
+ 1682  ls
+ 1683  cd iut
+ 1684  history
+touch unFichier.txt
+ls
+cd ..
+ls
+ls unFichier.txt 
+ls
+echo vive moi
+man history
+man bash
+ls
+ls
+ls unFichier.txt 
+ls
+ls un*
+ls unFichier.txt 
+cp unFichier.txt unAutreNomDeFichier.txt
+ls
+mkdir Un
+cd Un
+ls
+ls -l
+ls -al
+id
+ls -l
+cd 
+rm -f un*
+ls
+pwd
+ls
+touch photo.jpg
+ls
+cd ..
+ls
+ls unFichier.txt 
+ls
+echo vive toi
+man history
+man bash
+ls
+ls
+ls unFichier.txt 
+ls
+ls un*
+ls unFichier.txt 
+cp unFichier.txt unAutreNomDeFichier.txt
+ls
+ll
+ls -l
+ls -al
+id
+ls -l
+cd 
+rm ceci*
+ls
+cd Images/
+pwd
+ls
+touch photo.jpg
+ls
+cd ..
+ls
+echo vive nous
+man history
+man bash
+ls
+ls ceci*
+ls unFichier.txt 
+cp unFichier.txt unAutreNomDeFichier.txt
+cd ../Deux
+ls
+mkdir Images
+cd Images
+ls
+ll
+ls -l
+ls -al
+id
+ls -l
+cd 
+rm un*
+ls
+ls
+cd Images/
+pwd
+ls
+touch unFichier.txt
+ls
+cd ..
+cd 
+ls
+cd ..
+pwd
+echo *
